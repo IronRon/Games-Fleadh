@@ -1,6 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://jyo0nch4uijq"]
+[gd_scene load_steps=9 format=3 uid="uid://jyo0nch4uijq"]
 
 [ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="1_kovm6"]
+[ext_resource type="PackedScene" uid="uid://8qrnb21av1a" path="res://enemy.tscn" id="2_p0w1k"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_4yhln"]
+vertices = PackedVector3Array(-49.5, 0.5, 8, -1, 0.5, 8, -1, 0.5, 7.25, -49.5, 0.5, 8, -1, 0.5, 7.25, 0, 0.5, 7, 0, 0.5, -49.5, -49.5, 0.5, -49.5, 0.75, 0.5, 7, 1, 0.5, 8, 49.5, 0.5, 8, 49.5, 0.5, -49.5, 0, 0.5, -49.5, 0, 0.5, -49.5, 0, 0.5, 7, 0.75, 0.5, 7, 0, 0.5, 49.5, 0, 0.5, 9.25, -1, 0.5, 9, -49.5, 0.5, 8, -49.5, 0.5, 49.5, -1, 0.5, 9, -1, 0.5, 8, -49.5, 0.5, 8, 1, 0.5, 9, 0, 0.5, 9.25, 0, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, 8, 49.5, 0.5, 8, 1, 0.5, 8, 1, 0.5, 9)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 12), PackedInt32Array(15, 14, 13), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 20), PackedInt32Array(18, 20, 19), PackedInt32Array(23, 22, 21), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(27, 24, 28), PackedInt32Array(31, 30, 29)]
+agent_max_slope = 60.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q6gxs"]
 size = Vector3(100, 2, 100)
@@ -17,16 +23,32 @@ size = Vector3(100, 2, 100)
 
 [node name="Main" type="Node"]
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_4yhln")
+
+[node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground"]
 shape = SubResource("BoxShape3D_q6gxs")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]
 mesh = SubResource("BoxMesh_lk5la")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
+mesh = SubResource("PrismMesh_4yp2p")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
+shape = SubResource("BoxShape3D_awsgs")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 18, 0)
@@ -34,13 +56,6 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_kovm6")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
-mesh = SubResource("PrismMesh_4yp2p")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
-shape = SubResource("BoxShape3D_awsgs")
+[node name="Enemy" parent="." instance=ExtResource("2_p0w1k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 11)
+player_path = NodePath("../Player")

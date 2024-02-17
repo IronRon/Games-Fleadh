@@ -13,11 +13,11 @@ radius = 0.589398
 height = 2.03648
 
 [node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_mask = 4
 script = ExtResource("1_2jhrs")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_4c0s3")
 
 [node name="FacingEye" type="MeshInstance3D" parent="PlayerMesh"]
@@ -25,11 +25,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.470807, -0.538092)
 mesh = SubResource("SphereMesh_axgxf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_c34o0")
 
 [node name="CameraOrigin" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4804, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4804, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraOrigin"]
 spring_length = 2.0
