@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://jyo0nch4uijq"]
+[gd_scene load_steps=14 format=3 uid="uid://jyo0nch4uijq"]
 
 [ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="1_kovm6"]
 [ext_resource type="PackedScene" uid="uid://8qrnb21av1a" path="res://enemy.tscn" id="2_p0w1k"]
+[ext_resource type="PackedScene" uid="uid://b6v36n3hbjp32" path="res://monster.tscn" id="3_50agt"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_4yhln"]
 vertices = PackedVector3Array(-49.5, 0.5, 8, -1, 0.5, 8, -1, 0.5, 7.25, -49.5, 0.5, 8, -1, 0.5, 7.25, 0, 0.5, 7, 0, 0.5, -49.5, -49.5, 0.5, -49.5, 0.75, 0.5, 7, 1, 0.5, 8, 49.5, 0.5, 8, 49.5, 0.5, -49.5, 0, 0.5, -49.5, 0, 0.5, -49.5, 0, 0.5, 7, 0.75, 0.5, 7, 0, 0.5, 49.5, 0, 0.5, 9.25, -1, 0.5, 9, -49.5, 0.5, 8, -49.5, 0.5, 49.5, -1, 0.5, 9, -1, 0.5, 8, -49.5, 0.5, 8, 1, 0.5, 9, 0, 0.5, 9.25, 0, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, 8, 49.5, 0.5, 8, 1, 0.5, 8, 1, 0.5, 9)
@@ -10,6 +11,9 @@ agent_max_slope = 60.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q6gxs"]
 size = Vector3(100, 2, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8gl30"]
+albedo_color = Color(0.294118, 0.588235, 0.74902, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bn668"]
 
@@ -20,6 +24,17 @@ size = Vector3(100, 2, 100)
 [sub_resource type="PrismMesh" id="PrismMesh_4yp2p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_awsgs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dvtbu"]
+sky_top_color = Color(0.827451, 0, 0.32549, 1)
+sky_horizon_color = Color(0.152941, 0.768627, 0.54902, 1)
+
+[sub_resource type="Sky" id="Sky_oq1wk"]
+sky_material = SubResource("ProceduralSkyMaterial_dvtbu")
+
+[sub_resource type="Environment" id="Environment_4k764"]
+background_mode = 2
+sky = SubResource("Sky_oq1wk")
 
 [node name="Main" type="Node"]
 
@@ -35,6 +50,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_q6gxs")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]
+material_override = SubResource("StandardMaterial3D_8gl30")
 mesh = SubResource("BoxMesh_lk5la")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
@@ -50,6 +66,9 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
 shape = SubResource("BoxShape3D_awsgs")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4k764")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 18, 0)
 shadow_enabled = true
@@ -57,5 +76,9 @@ shadow_enabled = true
 [node name="Player" parent="." instance=ExtResource("1_kovm6")]
 
 [node name="Enemy" parent="." instance=ExtResource("2_p0w1k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 11)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.0064, 11)
+player_path = NodePath("../Player")
+
+[node name="Monster" parent="." instance=ExtResource("3_50agt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.29941, 0, -20)
 player_path = NodePath("../Player")
