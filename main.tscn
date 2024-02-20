@@ -85,7 +85,4 @@ player_path = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.29941, 0, -20)
 player_path = NodePath("../Player")
 
-[node name="Player2" parent="." instance=ExtResource("1_kovm6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 0)
-
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
