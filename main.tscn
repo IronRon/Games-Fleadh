@@ -72,6 +72,15 @@ shape = SubResource("BoxShape3D_awsgs")
 [node name="Orb" parent="." instance=ExtResource("2_okaaj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.46514, 0.496667, -17.8116)
 
+[node name="Orb2" parent="." instance=ExtResource("2_okaaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.173183, 0)
+
+[node name="Orb3" parent="." instance=ExtResource("2_okaaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.173183, 21)
+
+[node name="Orb4" parent="." instance=ExtResource("2_okaaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 2.17318, 12)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4k764")
 
