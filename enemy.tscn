@@ -6,9 +6,10 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_qeqp1"]
 
-[node name="Enemy" type="CharacterBody3D"]
+[node name="Enemy" type="CharacterBody3D" groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-collision_mask = 5
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_a0usk")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

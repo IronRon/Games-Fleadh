@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://brn6qw74chkcw"]
+[gd_scene load_steps=6 format=3 uid="uid://brn6qw74chkcw"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_2jhrs"]
 
@@ -12,9 +12,12 @@ height = 0.2
 radius = 0.589398
 height = 2.03648
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qit3c"]
+radius = 0.594083
+
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-collision_mask = 4
+collision_mask = 6
 script = ExtResource("1_2jhrs")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]
@@ -36,3 +39,13 @@ margin = 0.5
 
 [node name="Camera3D" type="Camera3D" parent="CameraOrigin/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="MobDetector" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 10
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MobDetector"]
+shape = SubResource("CapsuleShape3D_qit3c")
+
+[connection signal="body_entered" from="MobDetector" to="." method="_on_mob_detector_body_entered"]

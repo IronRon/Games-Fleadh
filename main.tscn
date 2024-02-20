@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://jyo0nch4uijq"]
+[gd_scene load_steps=15 format=3 uid="uid://jyo0nch4uijq"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_iluoh"]
 [ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="1_kovm6"]
 [ext_resource type="PackedScene" uid="uid://8qrnb21av1a" path="res://enemy.tscn" id="2_p0w1k"]
 [ext_resource type="PackedScene" uid="uid://b6v36n3hbjp32" path="res://monster.tscn" id="3_50agt"]
@@ -37,6 +38,7 @@ background_mode = 2
 sky = SubResource("Sky_oq1wk")
 
 [node name="Main" type="Node"]
+script = ExtResource("1_iluoh")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_4yhln")
@@ -82,3 +84,8 @@ player_path = NodePath("../Player")
 [node name="Monster" parent="." instance=ExtResource("3_50agt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.29941, 0, -20)
 player_path = NodePath("../Player")
+
+[node name="Player2" parent="." instance=ExtResource("1_kovm6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, 0)
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]

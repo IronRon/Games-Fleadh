@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+# Emitted when the player was hit by a mob.
+signal hit
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -7,7 +9,7 @@ const JUMP_VELOCITY = 4.5
 @export var sensitivity = 0.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+@export var gravity = 9.8
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -40,5 +42,28 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
+		
+	# Iterate through all collisions that occurred this frame
+	for index in range(get_slide_collision_count()):
+		# We get one of the collisions with the player
+		var collision = get_slide_collision(index)
+
+		# If the collision is with ground
+		if collision.get_collider() == null:
+			continue
+
+		# If the collider is with a mob
+		if collision.get_collider().is_in_group("monster"):
+			var mob = collision.get_collider()
+			break
 
 	move_and_slide()
+
+
+# And this function at the bottom.
+func die():
+	hit.emit()
+	queue_free()
+
+func _on_mob_detector_body_entered(body):
+	die()
