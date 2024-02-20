@@ -17,7 +17,7 @@ radius = 0.594083
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-collision_mask = 6
+collision_mask = 14
 script = ExtResource("1_2jhrs")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]

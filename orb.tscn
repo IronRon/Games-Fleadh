@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvt4fjmce0srw"]
+
+[ext_resource type="Script" path="res://Orb.gd" id="1_pmsyr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4aie"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_i1bnh"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3l81s"]
+radius = 0.145677
+
+[node name="Orb" type="StaticBody3D" groups=["orbs"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.173183, 0)
+collision_layer = 8
+script = ExtResource("1_pmsyr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_v4aie")
+mesh = SubResource("SphereMesh_i1bnh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_3l81s")

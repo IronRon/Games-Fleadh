@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://jyo0nch4uijq"]
+[gd_scene load_steps=16 format=3 uid="uid://jyo0nch4uijq"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_iluoh"]
 [ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="1_kovm6"]
+[ext_resource type="PackedScene" uid="uid://dvt4fjmce0srw" path="res://orb.tscn" id="2_okaaj"]
 [ext_resource type="PackedScene" uid="uid://8qrnb21av1a" path="res://enemy.tscn" id="2_p0w1k"]
 [ext_resource type="PackedScene" uid="uid://b6v36n3hbjp32" path="res://monster.tscn" id="3_50agt"]
 
@@ -68,6 +69,9 @@ skeleton = NodePath("../../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
 shape = SubResource("BoxShape3D_awsgs")
 
+[node name="Orb" parent="." instance=ExtResource("2_okaaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.46514, 0.496667, -17.8116)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4k764")
 
@@ -85,4 +89,56 @@ player_path = NodePath("../Player")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.29941, 0, -20)
 player_path = NodePath("../Player")
 
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DiedRect" type="ColorRect" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.0862745, 0.0901961, 0.32549)
+
+[node name="DeadText" type="Label" parent="UI/DiedRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -11.5
+offset_right = 0.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "YOU DIED"
+
+[node name="OrbPickUpRect" type="ColorRect" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.117647, 1, 0.109804, 0.356863)
+
+[node name="DeadText" type="Label" parent="UI/OrbPickUpRect"]
+layout_mode = 1
+offset_right = 197.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 30
+text = "Orb Collected"
+
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="picked_up" from="Player" to="." method="_on_player_picked_up"]
