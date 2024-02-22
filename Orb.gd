@@ -1,9 +1,16 @@
 extends StaticBody3D
 
+@export var colour = Color(1,1,1,1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var mesh_instance = $MeshInstance3D
+	var new_material = StandardMaterial3D.new()
+	new_material.metallic = 1
+	new_material.roughness = 0.5
+	new_material.albedo_color = colour
+	mesh_instance.material_override = new_material
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
