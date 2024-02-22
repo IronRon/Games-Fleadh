@@ -5,8 +5,10 @@ signal hit
 # Emitted when the player hits an orb.
 signal picked_up
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
+var speed = 5.0
+var jump = 4.5
+var strength = 5.0
+var density = 5.0
 
 var alive = true
 @onready var pivot = $CameraOrigin
@@ -35,7 +37,7 @@ func _physics_process(delta):
 
 		# Handle jump.
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
+			velocity.y = jump
 			
 
 		# Get the input direction and handle the movement/deceleration.
@@ -43,11 +45,11 @@ func _physics_process(delta):
 		var input_dir = Input.get_vector("Left", "Right", "Up", "Down")
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if direction:
-			velocity.x = direction.x * SPEED
-			velocity.z = direction.z * SPEED
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
 		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.z = move_toward(velocity.z, 0, SPEED)
+			velocity.x = move_toward(velocity.x, 0, speed)
+			velocity.z = move_toward(velocity.z, 0, speed)
 			
 		# Iterate through all collisions that occurred this frame
 		for index in range(get_slide_collision_count()):
@@ -72,6 +74,17 @@ func _physics_process(delta):
 
 		move_and_slide()
 
+func increase_speed(amount: float):
+	speed += amount
+	
+func increase_strength(amount: float):
+	strength += amount
+	
+func increase_density(amount: float):
+	density += amount
+	
+func increase_jump(amount: float):
+	jump += amount
 
 # And this function at the bottom.
 func die():
@@ -81,3 +94,7 @@ func die():
 
 func _on_mob_detector_body_entered(body):
 	die()
+
+
+func _on_orb_collected(orb_type):
+	pass # Replace with function body.

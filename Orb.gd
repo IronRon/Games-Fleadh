@@ -1,5 +1,16 @@
 extends StaticBody3D
 
+enum OrbType {
+	STRENGTH,
+	SPEED,
+	JUMP,
+	DENSITY
+}
+
+signal collected(orb_type: int)
+
+@export var orbType: OrbType = OrbType.SPEED
+
 @export var colour = Color(1,1,1,1)
 
 # Called when the node enters the scene tree for the first time.
@@ -12,7 +23,6 @@ func _ready():
 	mesh_instance.material_override = new_material
 
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -20,4 +30,5 @@ func _process(delta):
 
 # And this function at the bottom.
 func pick_up():
+	collected.emit(orbType)
 	queue_free()
