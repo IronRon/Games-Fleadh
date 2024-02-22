@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://jyo0nch4uijq"]
+[gd_scene load_steps=17 format=3 uid="uid://jyo0nch4uijq"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_iluoh"]
 [ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="1_kovm6"]
 [ext_resource type="PackedScene" uid="uid://dvt4fjmce0srw" path="res://orb.tscn" id="2_okaaj"]
 [ext_resource type="PackedScene" uid="uid://8qrnb21av1a" path="res://enemy.tscn" id="2_p0w1k"]
 [ext_resource type="PackedScene" uid="uid://b6v36n3hbjp32" path="res://monster.tscn" id="3_50agt"]
+[ext_resource type="Script" path="res://OrbCollectedLabel.gd" id="6_66t4f"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_4yhln"]
 vertices = PackedVector3Array(-49.5, 0.5, 8, -1, 0.5, 8, -1, 0.5, 7.25, -49.5, 0.5, 8, -1, 0.5, 7.25, 0, 0.5, 7, 0, 0.5, -49.5, -49.5, 0.5, -49.5, 0.75, 0.5, 7, 1, 0.5, 8, 49.5, 0.5, 8, 49.5, 0.5, -49.5, 0, 0.5, -49.5, 0, 0.5, -49.5, 0, 0.5, 7, 0.75, 0.5, 7, 0, 0.5, 49.5, 0, 0.5, 9.25, -1, 0.5, 9, -49.5, 0.5, 8, -49.5, 0.5, 49.5, -1, 0.5, 9, -1, 0.5, 8, -49.5, 0.5, 8, 1, 0.5, 9, 0, 0.5, 9.25, 0, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, 8, 49.5, 0.5, 8, 1, 0.5, 8, 1, 0.5, 9)
@@ -75,16 +76,16 @@ orbType = 0
 colour = Color(1, 0, 0, 1)
 
 [node name="Orb2" parent="." instance=ExtResource("2_okaaj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0.173183, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 0.173183, -18)
 colour = Color(0, 0, 1, 1)
 
 [node name="Orb3" parent="." instance=ExtResource("2_okaaj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.173183, 21)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.173183, -18)
 orbType = 2
 colour = Color(0, 1, 0, 1)
 
 [node name="Orb4" parent="." instance=ExtResource("2_okaaj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 2.17318, 12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 2.17318, -11)
 orbType = 3
 colour = Color(1, 1, 0, 1)
 
@@ -113,6 +114,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="OrbCollectedLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Orbs Collected: 0/4"
+script = ExtResource("6_66t4f")
+
 [node name="DiedRect" type="ColorRect" parent="UI"]
 visible = false
 layout_mode = 1
@@ -138,6 +146,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "YOU DIED"
+
+[node name="RetryText" type="Label" parent="UI/DiedRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_top = -169.0
+offset_right = 77.0
+offset_bottom = -146.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press Enter to Retry"
 
 [node name="OrbPickUpRect" type="ColorRect" parent="UI"]
 visible = false

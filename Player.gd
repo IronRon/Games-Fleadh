@@ -69,6 +69,7 @@ func _physics_process(delta):
 			if collision.get_collider().is_in_group("orbs"):
 				var orb = collision.get_collider()
 				picked_up.emit()
+				#orb.collected.connect($UI/OrbCollectedLabel._on_orb_collected.bind())
 				orb.pick_up()
 				break
 
@@ -94,7 +95,3 @@ func die():
 
 func _on_mob_detector_body_entered(body):
 	die()
-
-
-func _on_orb_collected(orb_type):
-	pass # Replace with function body.

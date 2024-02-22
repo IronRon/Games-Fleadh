@@ -18,6 +18,7 @@ func _ready():
 	# Connect the collected signal from each orb to the _on_orb_collected function
 	for orb in orbs:
 		orb.collected.connect(_on_orb_collected)
+		orb.collected.connect($UI/OrbCollectedLabel._on_orb_collected)
 
 func _on_orb_collected(orb_type: int):
 	match orb_type:
@@ -33,6 +34,11 @@ func _on_orb_collected(orb_type: int):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept") and $UI/DiedRect.visible:
+		# This restarts the current scene.
+		get_tree().reload_current_scene()
 	
 	
 func _on_player_hit():
