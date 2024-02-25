@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://caq2h8fxoj236"]
+
+[ext_resource type="Texture2D" uid="uid://ccr2ewad3ml2j" path="res://Yearbook Back2.jpg" id="1_1bg8x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fygx6"]
+albedo_texture = ExtResource("1_1bg8x")
+
+[sub_resource type="BoxMesh" id="BoxMesh_dh430"]
+material = SubResource("StandardMaterial3D_fygx6")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nw5i5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hxdaw"]
+albedo_color = Color(0.996078, 0, 0.313726, 1)
+albedo_texture = ExtResource("1_1bg8x")
+
+[sub_resource type="BoxMesh" id="BoxMesh_isdkn"]
+material = SubResource("StandardMaterial3D_hxdaw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1um0"]
+albedo_color = Color(1, 0, 1, 1)
+albedo_texture = ExtResource("1_1bg8x")
+
+[sub_resource type="BoxMesh" id="BoxMesh_j6330"]
+material = SubResource("StandardMaterial3D_l1um0")
+
+[node name="Tiles" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_dh430")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_nw5i5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_isdkn")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("BoxShape3D_nw5i5")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_j6330")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D"]
+shape = SubResource("BoxShape3D_nw5i5")

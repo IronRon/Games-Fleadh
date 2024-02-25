@@ -32,12 +32,12 @@ size = Vector3(100, 2, 100)
 sky_top_color = Color(0.827451, 0, 0.32549, 1)
 sky_horizon_color = Color(0.152941, 0.768627, 0.54902, 1)
 
-[sub_resource type="Sky" id="Sky_oq1wk"]
+[sub_resource type="Sky" id="Sky_vt0e0"]
 sky_material = SubResource("ProceduralSkyMaterial_dvtbu")
 
 [sub_resource type="Environment" id="Environment_4k764"]
 background_mode = 2
-sky = SubResource("Sky_oq1wk")
+sky = SubResource("Sky_vt0e0")
 
 [node name="Main" type="Node"]
 script = ExtResource("1_iluoh")

@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5pkdpeocvfia"]
+
+[ext_resource type="Script" path="res://tut.gd" id="1_0ykvc"]
+[ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="2_aryvh"]
+[ext_resource type="MeshLibrary" uid="uid://b6tvgagl0tg8a" path="res://tiles.meshlib" id="3_0apig"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_253ge"]
+sky_top_color = Color(0.827451, 0, 0.32549, 1)
+sky_horizon_color = Color(0.152941, 0.768627, 0.54902, 1)
+
+[sub_resource type="Sky" id="Sky_oq1wk"]
+sky_material = SubResource("ProceduralSkyMaterial_253ge")
+
+[sub_resource type="Environment" id="Environment_ovjej"]
+background_mode = 2
+sky = SubResource("Sky_oq1wk")
+
+[node name="tut" type="Node3D"]
+script = ExtResource("1_0ykvc")
+
+[node name="Player" parent="." instance=ExtResource("2_aryvh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("3_0apig")
+cell_size = Vector3(1, 1, 1)
+collision_layer = 4
+collision_mask = 0
+data = {
+"cells": PackedInt32Array(327679, 65535, 1, 262144, 65535, 1, 262144, 0, 1, 327679, 0, 1, 327678, 65535, 1, 327679, 65534, 1, 262144, 65534, 1, 262145, 65535, 1, 262145, 0, 1, 262144, 1, 1, 327679, 1, 1, 327678, 0, 1)
+}
+metadata/_editor_floor_ = Vector3(0, -1, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ovjej")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 18, 0)
+shadow_enabled = true
