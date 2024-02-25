@@ -18,9 +18,6 @@ sky = SubResource("Sky_oq1wk")
 [node name="tut" type="Node3D"]
 script = ExtResource("1_0ykvc")
 
-[node name="Player" parent="." instance=ExtResource("2_aryvh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
-
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("3_0apig")
 cell_size = Vector3(1, 1, 1)
@@ -37,3 +34,6 @@ environment = SubResource("Environment_ovjej")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 18, 0)
 shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_aryvh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)

@@ -6,7 +6,7 @@ signal hit
 signal picked_up
 
 var speed = 5.0
-var jump = 4.5
+var jump = 5
 var strength = 5.0
 var density = 5.0
 
@@ -18,7 +18,7 @@ var alive = true
 @export var gravity = 9.8
 
 func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED 
 
 func _input(event):
 	if (event is InputEventMouseMotion) and alive:
@@ -41,7 +41,12 @@ func _physics_process(delta):
 			
 		
 		if Input.is_action_just_pressed("Create"):
-			$"../GridMap".set_cell_item($PlayerMesh.global_transform.origin - Vector3(0,2,0), 2)
+			var player_position = $"../NavigationRegion3D/GridMap".local_to_map($PlayerMesh.global_transform.origin - Vector3(0,2,0))
+			var player_position_int = Vector3i(round(player_position.x), round(player_position.y), round(player_position.z))
+			if ($"../NavigationRegion3D/GridMap".get_cell_item(player_position_int) == -1):
+				#print($"../GridMap".local_to_map($PlayerMesh.global_transform.origin - Vector3(0,2,0)))
+				#print($PlayerMesh.global_transform.origin - Vector3(0, 2, 0))
+				$"../NavigationRegion3D/GridMap".set_cell_item(player_position_int, 2)
 
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.

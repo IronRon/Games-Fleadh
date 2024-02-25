@@ -1,15 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://jyo0nch4uijq"]
+[gd_scene load_steps=18 format=3 uid="uid://jyo0nch4uijq"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_iluoh"]
 [ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="1_kovm6"]
+[ext_resource type="MeshLibrary" uid="uid://b6tvgagl0tg8a" path="res://tiles.meshlib" id="2_48b78"]
 [ext_resource type="PackedScene" uid="uid://dvt4fjmce0srw" path="res://orb.tscn" id="2_okaaj"]
 [ext_resource type="PackedScene" uid="uid://8qrnb21av1a" path="res://enemy.tscn" id="2_p0w1k"]
 [ext_resource type="PackedScene" uid="uid://b6v36n3hbjp32" path="res://monster.tscn" id="3_50agt"]
 [ext_resource type="Script" path="res://OrbCollectedLabel.gd" id="6_66t4f"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_4yhln"]
-vertices = PackedVector3Array(-49.5, 0.5, 8, -1, 0.5, 8, -1, 0.5, 7.25, -49.5, 0.5, 8, -1, 0.5, 7.25, 0, 0.5, 7, 0, 0.5, -49.5, -49.5, 0.5, -49.5, 0.75, 0.5, 7, 1, 0.5, 8, 49.5, 0.5, 8, 49.5, 0.5, -49.5, 0, 0.5, -49.5, 0, 0.5, -49.5, 0, 0.5, 7, 0.75, 0.5, 7, 0, 0.5, 49.5, 0, 0.5, 9.25, -1, 0.5, 9, -49.5, 0.5, 8, -49.5, 0.5, 49.5, -1, 0.5, 9, -1, 0.5, 8, -49.5, 0.5, 8, 1, 0.5, 9, 0, 0.5, 9.25, 0, 0.5, 49.5, 49.5, 0.5, 49.5, 49.5, 0.5, 8, 49.5, 0.5, 8, 1, 0.5, 8, 1, 0.5, 9)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 12), PackedInt32Array(15, 14, 13), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 20), PackedInt32Array(18, 20, 19), PackedInt32Array(23, 22, 21), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(27, 24, 28), PackedInt32Array(31, 30, 29)]
+vertices = PackedVector3Array(-49.5, -4.5, -49.5, -49.5, -4.5, 49.5, 49.5, -4.5, 49.5, 49.5, -4.5, -49.5, -1.5, 5.5, -0.5, -1.5, 5.5, 0.5, -0.75, 5.5, 0.5, -0.75, 5.5, -0.5, 0.5, 5.5, 0.75, 1.5, 5.5, 0.5, 1.5, 5.5, -0.5, 0.5, 5.5, -0.75, -0.75, 5.5, -0.5, -0.75, 5.5, 0.5, -0.5, 5.5, 1.5, 0.5, 5.5, 1.5, 0.5, 5.5, 0.75, -0.75, 5.5, 0.5, 0.5, 5.5, -0.75, 0.5, 5.5, -1.5, -0.5, 5.5, -1.5, -0.75, 5.5, -0.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 13), PackedInt32Array(11, 13, 12), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 17), PackedInt32Array(19, 18, 20), PackedInt32Array(20, 18, 21)]
 agent_max_slope = 60.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q6gxs"]
@@ -46,7 +47,7 @@ script = ExtResource("1_iluoh")
 navigation_mesh = SubResource("NavigationMesh_4yhln")
 
 [node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
 collision_layer = 4
 collision_mask = 0
 
@@ -58,6 +59,7 @@ material_override = SubResource("StandardMaterial3D_8gl30")
 mesh = SubResource("BoxMesh_lk5la")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 collision_layer = 4
 collision_mask = 0
 
@@ -69,6 +71,16 @@ skeleton = NodePath("../../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
 shape = SubResource("BoxShape3D_awsgs")
+
+[node name="GridMap" type="GridMap" parent="NavigationRegion3D"]
+mesh_library = ExtResource("2_48b78")
+cell_size = Vector3(1, 1, 1)
+collision_layer = 4
+collision_mask = 0
+data = {
+"cells": PackedInt32Array(327679, 65535, 1, 262144, 65535, 1, 262144, 0, 1, 327679, 0, 1, 327678, 65535, 1, 327679, 65534, 1, 262144, 65534, 1, 262145, 65535, 1, 262145, 0, 1, 262144, 1, 1, 327679, 1, 1, 327678, 0, 1)
+}
+metadata/_editor_floor_ = Vector3(0, -1, 0)
 
 [node name="Orb" parent="." instance=ExtResource("2_okaaj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.46514, 0.496667, -17.8116)
@@ -97,6 +109,7 @@ transform = Transform3D(1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_kovm6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 
 [node name="Enemy" parent="." instance=ExtResource("2_p0w1k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.0064, 11)

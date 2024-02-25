@@ -34,6 +34,9 @@ mesh = SubResource("BoxMesh_dh430")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_nw5i5")
 
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="MeshInstance3D"]
+visible = false
+
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_isdkn")
 
