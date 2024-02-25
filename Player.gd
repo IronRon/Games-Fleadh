@@ -9,6 +9,7 @@ var speed = 5.0
 var jump = 5
 var strength = 5.0
 var density = 5.0
+var block = false
 
 var alive = true
 @onready var pivot = $CameraOrigin
@@ -19,6 +20,7 @@ var alive = true
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED 
+	#pass
 
 func _input(event):
 	if (event is InputEventMouseMotion) and alive:
@@ -40,7 +42,7 @@ func _physics_process(delta):
 			velocity.y = jump
 			
 		
-		if Input.is_action_just_pressed("Create"):
+		if Input.is_action_just_pressed("Create") and block:
 			var player_position = $"../NavigationRegion3D/GridMap".local_to_map($PlayerMesh.global_transform.origin - Vector3(0,2,0))
 			var player_position_int = Vector3i(round(player_position.x), round(player_position.y), round(player_position.z))
 			if ($"../NavigationRegion3D/GridMap".get_cell_item(player_position_int) == -1):
@@ -94,6 +96,9 @@ func increase_density(amount: float):
 	
 func increase_jump(amount: float):
 	jump += amount
+	
+func spawn_blocks():
+	block = true
 
 # And this function at the bottom.
 func die():

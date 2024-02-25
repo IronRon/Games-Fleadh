@@ -9,9 +9,9 @@
 [ext_resource type="Script" path="res://OrbCollectedLabel.gd" id="6_66t4f"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_4yhln"]
-vertices = PackedVector3Array(-49.5, -4.5, -49.5, -49.5, -4.5, 49.5, 49.5, -4.5, 49.5, 49.5, -4.5, -49.5, -1.5, 5.5, -0.5, -1.5, 5.5, 0.5, -0.75, 5.5, 0.5, -0.75, 5.5, -0.5, 0.5, 5.5, 0.75, 1.5, 5.5, 0.5, 1.5, 5.5, -0.5, 0.5, 5.5, -0.75, -0.75, 5.5, -0.5, -0.75, 5.5, 0.5, -0.5, 5.5, 1.5, 0.5, 5.5, 1.5, 0.5, 5.5, 0.75, -0.75, 5.5, 0.5, 0.5, 5.5, -0.75, 0.5, 5.5, -1.5, -0.5, 5.5, -1.5, -0.75, 5.5, -0.5)
+vertices = PackedVector3Array(-49.5, -4.5, -49.5, -49.5, -4.5, 49.5, 49.5, -4.5, 49.5, 49.5, -4.5, -49.5, -1.5, 5.5, -0.5, -1.5, 5.5, 0.75, -0.75, 5.5, 0.75, -0.75, 5.5, -0.5, 0.75, 5.5, 1, 1.75, 5.5, 0.75, 1.75, 5.5, -0.5, 0.75, 5.5, -0.75, -0.75, 5.5, -0.5, -0.75, 5.5, 0.75, -0.5, 5.5, 1.75, 0.75, 5.5, 1.75, 0.75, 5.5, 1, -0.75, 5.5, 0.75, 0.75, 5.5, -0.75, 0.75, 5.5, -1.5, -0.5, 5.5, -1.5, -0.75, 5.5, -0.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 13), PackedInt32Array(11, 13, 12), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 17), PackedInt32Array(19, 18, 20), PackedInt32Array(20, 18, 21)]
-agent_max_slope = 60.0
+agent_max_slope = 90.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q6gxs"]
 size = Vector3(100, 2, 100)
@@ -100,6 +100,11 @@ colour = Color(0, 1, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.5985, 0.496667, -17.8116)
 orbType = 3
 colour = Color(1, 1, 0, 1)
+
+[node name="Orb5" parent="." instance=ExtResource("2_okaaj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7721, 0.496667, -17.8116)
+orbType = 4
+colour = Color(1, 0, 1, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4k764")
@@ -196,5 +201,6 @@ text = "Orb Collected"
 [connection signal="collected" from="Orb2" to="." method="_on_orb_collected"]
 [connection signal="collected" from="Orb3" to="." method="_on_orb_collected"]
 [connection signal="collected" from="Orb4" to="." method="_on_orb_collected"]
+[connection signal="collected" from="Orb5" to="." method="_on_orb_collected"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="picked_up" from="Player" to="." method="_on_player_picked_up"]

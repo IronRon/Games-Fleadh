@@ -9,7 +9,8 @@ enum OrbType {
 	STRENGTH,
 	SPEED,
 	JUMP,
-	DENSITY
+	DENSITY,
+	BLOCK
 }
 
 @onready var dead_rect = $UI/DiedRect
@@ -19,6 +20,7 @@ enum OrbType {
 @onready var orb2 = $Orb2
 @onready var orb3 = $Orb3
 @onready var orb4 = $Orb4
+@onready var orb5 = $Orb5
 
 var rng = RandomNumberGenerator.new()
 
@@ -33,10 +35,8 @@ func _ready():
 		
 	randomize()
 	var monster_spawned = true
-	var orb1_spawned = true
-	var orb2_spawned = true
-	var orb3_spawned = true
-	var orb4_spawned = true
+	var orb_spawned = [true, true, true, true, true]
+	
 	var spawn_chance = grid_steps
 	var current_pos = Vector3(0, 0, 0)
 	
@@ -57,36 +57,54 @@ func _ready():
 		
 		$NavigationRegion3D/GridMap.set_cell_item(current_pos, 0)
 		if (monster_spawned):
-			if (rng.randi_range(0, spawn_chance) == 1):
+			if (rng.randi_range(0, spawn_chance) == 0):
 				monster.position = current_pos + Vector3(0,1.5,0)
 				monster_spawned = false
 			if (spawn_chance > 0):
 				spawn_chance -= 1
-		if (orb1_spawned):
-			if (rng.randi_range(0, spawn_chance) == 1):
-				orb1.position = current_pos + Vector3(0,1.5,0)
-				orb1_spawned = false
-			if (spawn_chance > 0):
-				spawn_chance -= 1
-		if (orb2_spawned):
-			if (rng.randi_range(0, spawn_chance) == 1):
+		if (orb_spawned[1]):
+			if (rng.randi_range(0, spawn_chance) == 0):
+				#print("orb2")
 				orb2.position = current_pos + Vector3(0,1.5,0)
-				orb2_spawned = false
+				orb_spawned[1] = false
 			if (spawn_chance > 0):
 				spawn_chance -= 1
+		if (orb_spawned[4]):
+			if (rng.randi_range(0, spawn_chance) == 0):
+				#print("orb5")
+				orb5.position = current_pos + Vector3(0,1.5,0)
+				orb_spawned[4] = false
+			if (spawn_chance > 0):
+				spawn_chance -= 1
+				
 		$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(0,10,10), 0)
-		if (orb3_spawned):
-			if (rng.randi_range(0, spawn_chance) == 1):
+		if (orb_spawned[2]):
+			if (rng.randi_range(0, spawn_chance) == 0):
+				#print("orb3")
 				orb3.position = current_pos + Vector3(0,11.5,10)
-				orb3_spawned = false
+				orb_spawned[2] = false
 			if (spawn_chance > 0):
 				spawn_chance -= 1
-		if (orb4_spawned):
-			if (rng.randi_range(0, spawn_chance) == 1):
-				orb4.position = current_pos + Vector3(0,11.5,10)
-				orb4_spawned = false
+				
+		$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(0,15,-20), 0)
+		if (orb_spawned[3]):
+			if (rng.randi_range(0, spawn_chance) == 0):
+				#print("orb4")
+				orb4.position = current_pos + Vector3(0,15.5,-20)
+				orb_spawned[3] = false
 			if (spawn_chance > 0):
 				spawn_chance -= 1
+				
+		$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(8,27,-16), 0)
+		if (orb_spawned[0]):
+			if (rng.randi_range(0, spawn_chance) == 0):
+				#print("orb1")
+				orb1.position = current_pos + Vector3(8,27.5,-16)
+				orb_spawned[0] = false
+			if (spawn_chance > 0):
+				spawn_chance -= 1
+	#print(spawn_chance)
+	$NavigationRegion3D.bake_navigation_mesh()
 
 func _orb_type_collected(orb_type: int):
 	match orb_type:
@@ -98,6 +116,8 @@ func _orb_type_collected(orb_type: int):
 			$Player.increase_density(5)
 		OrbType.JUMP:
 			$Player.increase_jump(5)
+		OrbType.BLOCK:
+			$Player.spawn_blocks()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

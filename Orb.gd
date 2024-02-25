@@ -4,7 +4,8 @@ enum OrbType {
 	STRENGTH,
 	SPEED,
 	JUMP,
-	DENSITY
+	DENSITY,
+	BLOCK
 }
 
 signal collected(orb_type: int)

@@ -14,4 +14,4 @@ func _process(delta):
 
 func _orb_collected():
 	orb_collected += 1
-	text = "Orbs Collected: %s/4" % orb_collected
+	text = "Orbs Collected: %s/5" % orb_collected
