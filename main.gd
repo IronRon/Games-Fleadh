@@ -17,10 +17,9 @@ func _ready():
 	 
 	# Connect the collected signal from each orb to the _on_orb_collected function
 	for orb in orbs:
-		orb.collected.connect(_on_orb_collected)
-		orb.collected.connect($UI/OrbCollectedLabel._on_orb_collected)
+		orb.collected.connect(_orb_type_collected)
 
-func _on_orb_collected(orb_type: int):
+func _orb_type_collected(orb_type: int):
 	match orb_type:
 		OrbType.SPEED:
 			$Player.increase_speed(5)
@@ -49,3 +48,7 @@ func _on_player_picked_up():
 	orb_rect.visible = true
 	await get_tree().create_timer(0.2).timeout
 	orb_rect.visible = false
+
+
+func _on_orb_collected(orb_type):
+	$UI/OrbCollectedLabel._orb_collected()

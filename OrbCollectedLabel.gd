@@ -12,6 +12,6 @@ func _process(delta):
 	pass
 
 
-func _on_orb_collected():
+func _orb_collected():
 	orb_collected += 1
-	text = "Orbs Collected: %s" % orb_collected
+	text = "Orbs Collected: %s/4" % orb_collected
