@@ -134,6 +134,8 @@ func die():
 	hit.emit()
 	visible = false
 	alive = false
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _on_mob_detector_body_entered(body):
-	die()
+	#die()
+	pass

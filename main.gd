@@ -135,9 +135,7 @@ func _process(delta):
 	pass
 	
 func _unhandled_input(event):
-	if event.is_action_pressed("ui_accept") and $UI/DiedRect.visible:
-		# This restarts the current scene.
-		get_tree().reload_current_scene()
+	pass
 	
 	
 func _on_player_hit():
@@ -151,4 +149,10 @@ func _on_player_picked_up():
 
 
 func _on_orb_collected(orb_type):
-	$UI/OrbCollectedLabel._orb_collected()
+	$UI._orb_collected(orb_type)
+	
+func _quit_game():
+	get_tree().quit()
+	
+func _retry_game():
+	get_tree().reload_current_scene()
