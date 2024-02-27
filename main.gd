@@ -10,7 +10,8 @@ enum OrbType {
 	SPEED,
 	JUMP,
 	DENSITY,
-	BLOCK
+	BLOCK,
+	BLOCK_SPAM
 }
 
 @onready var dead_rect = $UI/DiedRect
@@ -21,6 +22,7 @@ enum OrbType {
 @onready var orb3 = $Orb3
 @onready var orb4 = $Orb4
 @onready var orb5 = $Orb5
+@onready var orb6 = $Orb6
 
 var rng = RandomNumberGenerator.new()
 
@@ -35,7 +37,7 @@ func _ready():
 		
 	randomize()
 	var monster_spawned = true
-	var orb_spawned = [true, true, true, true, true]
+	var orb_spawned = [true, true, true, true, true, true]
 	
 	var spawn_chance = grid_steps
 	var current_pos = Vector3(0, 0, 0)
@@ -90,7 +92,7 @@ func _ready():
 		if (orb_spawned[3]):
 			if (rng.randi_range(0, spawn_chance) == 0):
 				#print("orb4")
-				orb4.position = current_pos + Vector3(0,15.5,-20)
+				orb4.position = current_pos + Vector3(0,16.5,-20)
 				orb_spawned[3] = false
 			if (spawn_chance > 0):
 				spawn_chance -= 1
@@ -99,8 +101,15 @@ func _ready():
 		if (orb_spawned[0]):
 			if (rng.randi_range(0, spawn_chance) == 0):
 				#print("orb1")
-				orb1.position = current_pos + Vector3(8,27.5,-16)
+				orb1.position = current_pos + Vector3(8,28.5,-16)
 				orb_spawned[0] = false
+			if (spawn_chance > 0):
+				spawn_chance -= 1
+		if (orb_spawned[5]):
+			if (rng.randi_range(0, spawn_chance) == 0):
+				#print("orb6")
+				orb6.position = current_pos + Vector3(0,1.5,0)
+				orb_spawned[5] = false
 			if (spawn_chance > 0):
 				spawn_chance -= 1
 	#print(spawn_chance)
@@ -118,6 +127,8 @@ func _orb_type_collected(orb_type: int):
 			$Player.increase_jump(5)
 		OrbType.BLOCK:
 			$Player.spawn_blocks()
+		OrbType.BLOCK_SPAM:
+			$Player.spawn_blocks_spam()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

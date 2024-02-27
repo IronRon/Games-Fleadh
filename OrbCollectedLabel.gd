@@ -4,7 +4,7 @@ var orb_collected = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	text_update()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -14,4 +14,7 @@ func _process(delta):
 
 func _orb_collected():
 	orb_collected += 1
-	text = "Orbs Collected: %s/5" % orb_collected
+	text_update()
+
+func text_update():
+	text = "Orbs Collected: %s/6" % orb_collected

@@ -27,6 +27,6 @@ func _process(delta):
 	var next_nav_point = nav_agent.get_next_path_position()
 	velocity = (next_nav_point - global_transform.origin).normalized() * SPEED
 
-	look_at(Vector3(player_position.x, global_position.y, player_position.z), Vector3.UP)
+	look_at(Vector3(next_nav_point.x, global_position.y, next_nav_point.z), Vector3.UP)
 
 	move_and_slide()
