@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dvt4fjmce0srw" path="res://orb.tscn" id="2_okaaj"]
 [ext_resource type="PackedScene" uid="uid://8qrnb21av1a" path="res://enemy.tscn" id="2_p0w1k"]
 [ext_resource type="PackedScene" uid="uid://b6v36n3hbjp32" path="res://monster.tscn" id="3_50agt"]
-[ext_resource type="Script" path="res://UI.gd" id="7_y01mk"]
+[ext_resource type="PackedScene" uid="uid://fvvlvtgutkbj" path="res://ui.tscn" id="7_mh3s0"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_4yhln"]
 vertices = PackedVector3Array(-49.5, -4.5, -49.5, -49.5, -4.5, 49.5, 49.5, -4.5, 49.5, 49.5, -4.5, -49.5, -1.5, 5.5, -0.5, -1.5, 5.5, 0.75, -0.75, 5.5, 0.75, -0.75, 5.5, -0.5, 0.75, 5.5, 1, 1.75, 5.5, 0.75, 1.75, 5.5, -0.5, 0.75, 5.5, -0.75, -0.75, 5.5, -0.5, -0.75, 5.5, 0.75, -0.5, 5.5, 1.75, 0.75, 5.5, 1.75, 0.75, 5.5, 1, -0.75, 5.5, 0.75, 0.75, 5.5, -0.75, 0.75, 5.5, -1.5, -0.5, 5.5, -1.5, -0.75, 5.5, -0.5)
@@ -42,6 +42,7 @@ sky = SubResource("Sky_vt0e0")
 
 [node name="Main" type="Node"]
 script = ExtResource("1_iluoh")
+mob_scene = ExtResource("3_50agt")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_4yhln")
@@ -125,90 +126,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.0064, 11)
 player_path = NodePath("../Player")
 
-[node name="Monster" parent="." instance=ExtResource("3_50agt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.29941, 0, -20)
-player_path = NodePath("../Player")
-
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("7_y01mk")
-
-[node name="OrbCollectedLabel" type="Label" parent="UI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Orbs Collected: 0/4"
-
-[node name="DiedRect" type="ColorRect" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 0.0862745, 0.0901961, 0.32549)
-
-[node name="DeadText" type="Label" parent="UI/DiedRect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -0.5
-offset_top = -11.5
-offset_right = 0.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 100
-text = "YOU DIED"
-
-[node name="RetryButton" type="Button" parent="UI/DiedRect"]
-layout_mode = 0
-offset_left = 427.0
-offset_top = 457.0
-offset_right = 512.0
-offset_bottom = 507.0
-theme_override_font_sizes/font_size = 30
-text = "Retry"
-
-[node name="QuitBuuton" type="Button" parent="UI/DiedRect"]
-layout_mode = 0
-offset_left = 641.0
-offset_top = 461.0
-offset_right = 712.0
-offset_bottom = 511.0
-theme_override_font_sizes/font_size = 30
-text = "Quit"
-
-[node name="OrbPickUpRect" type="ColorRect" parent="UI"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.117647, 1, 0.109804, 0.356863)
-
-[node name="PickUpText" type="Label" parent="UI/OrbPickUpRect"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -98.5
-offset_right = 98.5
-offset_bottom = 42.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 50
-text = "Orb Collected"
+[node name="UI" parent="." instance=ExtResource("7_mh3s0")]
 
 [connection signal="collected" from="Orb" to="." method="_on_orb_collected"]
 [connection signal="collected" from="Orb2" to="." method="_on_orb_collected"]
@@ -217,8 +135,5 @@ text = "Orb Collected"
 [connection signal="collected" from="Orb5" to="." method="_on_orb_collected"]
 [connection signal="collected" from="Orb6" to="." method="_on_orb_collected"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
-[connection signal="picked_up" from="Player" to="." method="_on_player_picked_up"]
 [connection signal="quit" from="UI" to="." method="_quit_game"]
 [connection signal="retry" from="UI" to="." method="_retry_game"]
-[connection signal="pressed" from="UI/DiedRect/RetryButton" to="UI" method="_on_retry_button_pressed"]
-[connection signal="pressed" from="UI/DiedRect/QuitBuuton" to="UI" method="_on_quit_buuton_pressed"]

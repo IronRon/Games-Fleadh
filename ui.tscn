@@ -1,0 +1,183 @@
+[gd_scene load_steps=2 format=3 uid="uid://fvvlvtgutkbj"]
+
+[ext_resource type="Script" path="res://UI.gd" id="1_6b8of"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6b8of")
+
+[node name="OrbCollectedLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Orbs Collected: 0/6"
+
+[node name="StartScreen" type="ColorRect" parent="."]
+process_mode = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.282353, 0.32549, 0.913725, 0.54902)
+
+[node name="Title" type="Label" parent="StartScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -386.0
+offset_top = 49.0
+offset_right = 387.0
+offset_bottom = 132.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Games Fleadh Game Thing"
+
+[node name="Objective" type="Label" parent="StartScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "Collect all the orbs and defeat the monsters"
+
+[node name="Controls" type="Label" parent="StartScreen"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 40.0
+offset_bottom = 11.5
+grow_vertical = 2
+text = "Press Esc to Pause
+Press Shift to place blocks 
+with block orb
+Click to punch"
+
+[node name="Start" type="Button" parent="StartScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.653
+anchor_right = 0.5
+anchor_bottom = 0.653
+offset_left = -25.0
+offset_top = -14.144
+offset_right = 25.0
+offset_bottom = 16.856
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Start
+"
+
+[node name="Menu" type="ColorRect" parent="."]
+process_mode = 2
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.172549)
+
+[node name="Close" type="Button" parent="Menu"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -75.0
+offset_top = 18.0
+offset_right = -25.0
+offset_bottom = 49.0
+grow_horizontal = 0
+text = "Close
+"
+
+[node name="RetryButton" type="Button" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.408
+anchor_top = 0.744
+anchor_right = 0.408
+anchor_bottom = 0.744
+offset_left = -43.016
+offset_top = -25.112
+offset_right = 41.984
+offset_bottom = 24.888
+theme_override_font_sizes/font_size = 30
+text = "Retry"
+
+[node name="QuitBuuton" type="Button" parent="Menu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.603
+anchor_top = 0.744
+anchor_right = 0.603
+anchor_bottom = 0.744
+offset_left = -35.6561
+offset_top = -25.112
+offset_right = 35.3439
+offset_bottom = 24.888
+theme_override_font_sizes/font_size = 30
+text = "Quit"
+
+[node name="DeadText" type="Label" parent="Menu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -235.5
+offset_top = -68.5
+offset_right = 235.5
+offset_bottom = 68.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "YOU DIED"
+
+[node name="OrbPickUpRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.117647, 1, 0.109804, 0.356863)
+
+[node name="PickUpText" type="Label" parent="OrbPickUpRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -98.5
+offset_right = 98.5
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Orb Collected"
+
+[connection signal="pressed" from="StartScreen/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Menu/Close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="Menu/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="pressed" from="Menu/QuitBuuton" to="." method="_on_quit_buuton_pressed"]

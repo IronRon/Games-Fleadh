@@ -17,6 +17,8 @@ enum OrbType {
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	text_update()
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,6 +52,17 @@ func _orb_collected(orb_type):
 
 func text_update():
 	$OrbCollectedLabel.text = "Orbs Collected: %s/6" % orb_collected
+	
+func died_rect():
+	$Menu.color = Color.hex(0xff161753)
+	$Menu/DeadText.visible = true
+	_show_menu()
+
+	
+func orb_rect():
+	$OrbPickUpRect.visible = true
+	await get_tree().create_timer(0.2).timeout
+	$OrbPickUpRect.visible = false
 
 
 func _on_quit_buuton_pressed():
@@ -57,4 +70,25 @@ func _on_quit_buuton_pressed():
 
 
 func _on_retry_button_pressed():
+	_on_close_pressed()
 	retry.emit()
+
+
+func _show_menu():
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	$Menu.show()
+
+
+func _on_close_pressed():
+	$Menu.hide()
+	$Menu/DeadText.visible = false
+	$Menu.color = Color.hex(0x0000002c)
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
+
+
+func _on_start_pressed():
+	$StartScreen.hide()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
