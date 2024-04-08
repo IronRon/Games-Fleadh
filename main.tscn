@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://jyo0nch4uijq"]
+[gd_scene load_steps=14 format=3 uid="uid://jyo0nch4uijq"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_iluoh"]
 [ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="1_kovm6"]
@@ -12,18 +12,6 @@
 vertices = PackedVector3Array(-49.5, -4.5, -49.5, -49.5, -4.5, 49.5, 49.5, -4.5, 49.5, 49.5, -4.5, -49.5, -1.5, 5.5, -0.5, -1.5, 5.5, 0.75, -0.75, 5.5, 0.75, -0.75, 5.5, -0.5, 0.75, 5.5, 1, 1.75, 5.5, 0.75, 1.75, 5.5, -0.5, 0.75, 5.5, -0.75, -0.75, 5.5, -0.5, -0.75, 5.5, 0.75, -0.5, 5.5, 1.75, 0.75, 5.5, 1.75, 0.75, 5.5, 1, -0.75, 5.5, 0.75, 0.75, 5.5, -0.75, 0.75, 5.5, -1.5, -0.5, 5.5, -1.5, -0.75, 5.5, -0.5)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 13), PackedInt32Array(11, 13, 12), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 17), PackedInt32Array(19, 18, 20), PackedInt32Array(20, 18, 21)]
 agent_max_slope = 90.0
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_q6gxs"]
-size = Vector3(100, 2, 100)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8gl30"]
-albedo_color = Color(0.294118, 0.588235, 0.74902, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bn668"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_lk5la"]
-material = SubResource("StandardMaterial3D_bn668")
-size = Vector3(100, 2, 100)
 
 [sub_resource type="PrismMesh" id="PrismMesh_4yp2p"]
 
@@ -46,18 +34,6 @@ mob_scene = ExtResource("3_50agt")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_4yhln")
-
-[node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground"]
-shape = SubResource("BoxShape3D_q6gxs")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]
-material_override = SubResource("StandardMaterial3D_8gl30")
-mesh = SubResource("BoxMesh_lk5la")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)

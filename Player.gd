@@ -16,6 +16,7 @@ var alive = true
 var mob = null
 @onready var pivot = $CameraOrigin
 @onready var anim_tree = $AnimationTree
+@onready var armature = $Visuals
 
 @export var sensitivity = 0.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -28,6 +29,7 @@ func _ready():
 func _input(event):
 	if (event is InputEventMouseMotion) and alive:
 		rotate_y(deg_to_rad(-event.relative.x * sensitivity))
+		armature.rotate_y(deg_to_rad(event.relative.x * sensitivity))
 		pivot.rotate_x(deg_to_rad(-event.relative.y * sensitivity))
 		pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-90), deg_to_rad(45))
 
@@ -70,6 +72,10 @@ func _physics_process(delta):
 		
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if direction:
+			armature.look_at(position + direction)
+			#print("position:", position)
+			#print("direction:", direction)
+			#print("position - direction:", (position - direction))
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
 		else:

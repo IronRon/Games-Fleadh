@@ -12,6 +12,7 @@ grow_vertical = 2
 script = ExtResource("1_6b8of")
 
 [node name="OrbCollectedLabel" type="Label" parent="."]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "Orbs Collected: 0/6"
