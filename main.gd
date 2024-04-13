@@ -44,11 +44,16 @@ func _ready():
 	var current_dir = Vector3.RIGHT
 	var last_dir = current_dir * -1
 	
+	var layer_height = 1  # Height difference between layers
+	var orientation
+	
+	# Main loop for grid steps
 	for i in range(0, grid_steps):
 		var temp_dir = dir.duplicate()
 		temp_dir.shuffle()
 		var d = temp_dir.pop_front()
-
+		
+		# Ensure the new direction is valid
 		while(abs(current_pos.x + d.x) > grid_size or abs(current_pos.z + d.z) > grid_size or d == last_dir * -1):
 			temp_dir.shuffle()
 			d = temp_dir.pop_front()
@@ -56,9 +61,37 @@ func _ready():
 		current_pos += d
 		last_dir = d
 		
+		# Occasionally change layers
+		if randf() < 0.0025:  # 15% chance to change layer
+			orientation = get_orientation_index_from_direction(d, 1)
+			$NavigationRegion3D/GridMap.set_cell_item(current_pos, 0)
+			current_pos.y += layer_height
+			current_pos += d
+			$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
+			current_pos.y += layer_height
+			current_pos += d
+			$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
+			current_pos.y += layer_height
+			current_pos += d
+			$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
+			current_pos += d
+		elif randf() < 0.005:  # 15% chance to change layer
+			orientation = get_orientation_index_from_direction(d, -1)
+			$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
+			current_pos.y -= layer_height
+			current_pos += d
+			$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
+			current_pos.y -= layer_height
+			current_pos += d
+			$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
+			current_pos.y -= layer_height
+			current_pos += d
+			$NavigationRegion3D/GridMap.set_cell_item(current_pos, 0)
+			current_pos += d
+		
 		$NavigationRegion3D/GridMap.set_cell_item(current_pos, 0)
-		$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(0,-1,1), 0)
-		$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(1,-2,0), 0)
+		#$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(0,-1,1), 0)
+		#$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(1,-2,0), 0)
 		
 		if (monster_spawned[0]):
 			if (rng.randi_range(0, spawn_chance) == 0):
@@ -140,6 +173,32 @@ func _ready():
 				
 	#print(spawn_chance)
 	$NavigationRegion3D.bake_navigation_mesh()
+
+# This function returns an orientation index based on the direction vector.
+func get_orientation_index_from_direction(direction: Vector3, up: int) -> int:
+	if up == 1:
+		if direction == Vector3.RIGHT:
+			return 0
+		elif direction == Vector3.LEFT:
+			return 3
+		elif direction == Vector3.FORWARD:
+			return 7
+		elif direction == Vector3.BACK:
+			return 15
+	elif up == -1:
+		if direction == Vector3.RIGHT:
+			return 3
+		elif direction == Vector3.LEFT:
+			return 0
+		elif direction == Vector3.FORWARD:
+			return 15
+		elif direction == Vector3.BACK:
+			return 7
+	return 0  # Default orientation
+
+func can_spawn_at(pos):
+	# Check if the position is not already occupied by another grid element
+	return $NavigationRegion3D/GridMap.get_cell_item(pos) == -1
 
 func _orb_type_collected(orb_type: int):
 	match orb_type:
