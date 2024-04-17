@@ -9,8 +9,8 @@ var speed = 5.0
 var jump = 5
 var strength = 5.0
 var density = 5.0
-var block = false
-var block_spam = false
+var block = true
+var block_spam = true
 
 var alive = true
 var mob = null
@@ -140,12 +140,12 @@ func _hit_finished():
 	
 	
 func place_block():
-	var player_position = $"../NavigationRegion3D/GridMap".local_to_map($CollisionShape3D.global_transform.origin - Vector3(0,1.5,0))
+	var player_position = $"../GridMap".local_to_map($CollisionShape3D.global_transform.origin - Vector3(0,1.5,0))
 	var player_position_int = Vector3i(round(player_position.x), round(player_position.y), round(player_position.z))
-	if ($"../NavigationRegion3D/GridMap".get_cell_item(player_position_int) == -1):
+	if ($"../GridMap".get_cell_item(player_position_int) == -1):
 		#print($"../GridMap".local_to_map($PlayerMesh.global_transform.origin - Vector3(0,2,0)))
 		#print($PlayerMesh.global_transform.origin - Vector3(0, 2, 0))
-		$"../NavigationRegion3D/GridMap".set_cell_item(player_position_int, 2)
+		$"../GridMap".set_cell_item(player_position_int, 4)
 	
 # And this function at the bottom.
 func die():
