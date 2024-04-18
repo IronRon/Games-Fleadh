@@ -19,6 +19,8 @@ enum OrbType {
 
 @onready var orbs = [$Orb, $Orb2, $Orb3, $Orb4, $Orb5, $Orb6]
 var orb_spawned = [true, true, true, true, true, true]
+var initial_spawn_chance = 0.3  # Start with a 30% chance to spawn an orb
+var orbs_placed = 0  # Counter for how many orbs have been placed
 
 var rng = RandomNumberGenerator.new()
 
@@ -215,22 +217,28 @@ func make_room(rec:int, floor_index: int):
 			grid_map.set_cell_item(pos,0)
 			room.append(pos)
 			
+			
 	# Randomly decide to place an orb
-	if rng.randf() < 0.3:  # 30% chance to place an orb
-		for i in range(len(orb_spawned)):
-			if (orb_spawned[i]):
-				var safe_positions = []
-				# Calculate safe positions within the room, avoiding walls
-				for r in range(1, height - 1):
-					for c in range(1, width - 1):
-						safe_positions.append(start_pos + Vector3i(c, 0, r))
-				
-				# Only proceed if there are safe positions available
-				if safe_positions.size() > 0:
-					var random_index = rng.randi() % safe_positions.size()
-					orbs[i].position = Vector3(safe_positions[random_index]) + Vector3(0,1.5,0) # Adjust Y to prevent intersection with the floor
-					orb_spawned[i] = false
-				break
+	if orbs_placed < orb_spawned.size():
+		for i in range(orb_spawned.size()):
+			if rng.randf() < initial_spawn_chance :  # 10% chance to place an orb
+				if (orb_spawned[i]):
+					var safe_positions = []
+					# Calculate safe positions within the room, avoiding walls
+					for r in range(1, height - 1):
+						for c in range(1, width - 1):
+							safe_positions.append(start_pos + Vector3i(c, 0, r))
+					
+					# Only proceed if there are safe positions available
+					if safe_positions.size() > 0:
+						var random_index = rng.randi() % safe_positions.size()
+						orbs[i].position = Vector3(safe_positions[random_index]) + Vector3(0,1.5,0) # Adjust Y to prevent intersection with the floor
+						orb_spawned[i] = false
+						orbs_placed += 1
+					break  # Exit the loop after placing an orb
+					
+			# Increase spawn chance by a calculated factor to ensure it approaches 100%
+			initial_spawn_chance += (1.0 - initial_spawn_chance) * 0.1  # Increase spawn chance by 10% of the remaining probability
 		
 	# Now, add each Vector3 from the `room` to `floors[floor_index]["room_tiles"]`
 	floors[floor_index]["room_tiles"].append(room)
