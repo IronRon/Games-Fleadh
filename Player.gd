@@ -140,7 +140,7 @@ func _hit_finished():
 	
 	
 func place_block():
-	var player_position = $"../GridMap".local_to_map($CollisionShape3D.global_transform.origin - Vector3(0,1.5,0))
+	var player_position = $"../GridMap".local_to_map($CollisionShape3D.global_transform.origin - Vector3(0,1,0))
 	var player_position_int = Vector3i(round(player_position.x), round(player_position.y), round(player_position.z))
 	if ($"../GridMap".get_cell_item(player_position_int) == -1):
 		#print($"../GridMap".local_to_map($PlayerMesh.global_transform.origin - Vector3(0,2,0)))
