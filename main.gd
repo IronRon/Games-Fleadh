@@ -17,12 +17,8 @@ enum OrbType {
 
 @export var mob_scene: PackedScene
 
-@onready var orb1 = $Orb
-@onready var orb2 = $Orb2
-@onready var orb3 = $Orb3
-@onready var orb4 = $Orb4
-@onready var orb5 = $Orb5
-@onready var orb6 = $Orb6
+@onready var orbs = [$Orb, $Orb2, $Orb3, $Orb4, $Orb5, $Orb6]
+var orb_spawned = [true, true, true, true, true, true]
 
 var rng = RandomNumberGenerator.new()
 
@@ -218,8 +214,27 @@ func make_room(rec:int, floor_index: int):
 			var pos : Vector3i = start_pos + Vector3i(c,0,r)
 			grid_map.set_cell_item(pos,0)
 			room.append(pos)
+			
+	# Randomly decide to place an orb
+	if rng.randf() < 0.3:  # 30% chance to place an orb
+		for i in range(len(orb_spawned)):
+			if (orb_spawned[i]):
+				var safe_positions = []
+				# Calculate safe positions within the room, avoiding walls
+				for r in range(1, height - 1):
+					for c in range(1, width - 1):
+						safe_positions.append(start_pos + Vector3i(c, 0, r))
+				
+				# Only proceed if there are safe positions available
+				if safe_positions.size() > 0:
+					var random_index = rng.randi() % safe_positions.size()
+					orbs[i].position = Vector3(safe_positions[random_index]) + Vector3(0,1.5,0) # Adjust Y to prevent intersection with the floor
+					orb_spawned[i] = false
+				break
+		
 	# Now, add each Vector3 from the `room` to `floors[floor_index]["room_tiles"]`
 	floors[floor_index]["room_tiles"].append(room)
+	print(floors[floor_index]["room_tiles"])
 	var avg_x : float = start_pos.x + (float(width)/2)
 	var avg_z : float = start_pos.z + (float(height)/2)
 	var center_pos : Vector3 = Vector3(avg_x,y_level,avg_z)
@@ -227,6 +242,12 @@ func make_room(rec:int, floor_index: int):
 	
 func _ready():
 	set_start(true)
+	# Get all nodes in the "orbs" group
+	#var orbs = get_tree().get_nodes_in_group("orbs")
+	 
+	# Connect the collected signal from each orb to the _on_orb_collected function
+	for orb in orbs:
+		orb.collected.connect(_orb_type_collected)
 
 
 func _on_dun_mesh_complete():
@@ -432,9 +453,9 @@ func spawn_monster(current_pos, level_vector):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("Pause"):
-			$UI._show_menu()
-	#pass
+	#if Input.is_action_just_pressed("Pause"):
+	#		$UI._show_menu()
+	pass
 	
 func _unhandled_input(event):
 	pass
