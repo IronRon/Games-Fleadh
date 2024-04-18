@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7d1385xxayib"]
+
+[ext_resource type="Script" path="res://Teleporter.gd" id="1_miekm"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3jsuj"]
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lj0f7"]
+albedo_color = Color(0.227451, 0.207843, 1, 1)
+metallic = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_20qoy"]
+height = 0.2
+
+[node name="Teleporter" type="Area3D"]
+collision_layer = 4
+script = ExtResource("1_miekm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+layers = 4
+mesh = SubResource("CylinderMesh_3jsuj")
+surface_material_override/0 = SubResource("StandardMaterial3D_lj0f7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("CylinderShape3D_20qoy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

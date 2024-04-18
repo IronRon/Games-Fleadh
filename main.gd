@@ -22,6 +22,10 @@ var orb_spawned = [true, true, true, true, true, true]
 var initial_spawn_chance = 0.3  # Start with a 30% chance to spawn an orb
 var orbs_placed = 0  # Counter for how many orbs have been placed
 
+var floors : Array = []
+var floor_has_teleporter : Array = []
+var teleporter_spawn_chances : Array = []
+
 var rng = RandomNumberGenerator.new()
 
 @onready var grid_map : GridMap = $GridMap
@@ -31,11 +35,15 @@ func set_start(val:bool)->void:
 	#if Engine.is_editor_hint():
 		grid_map.clear()
 		floors.resize(num_floors)
+		floor_has_teleporter.resize(num_floors)
+		teleporter_spawn_chances.resize(num_floors)
 		for i in range(num_floors):
 			floors[i] = {
 				"room_tiles": Array(PackedVector3Array()),
 				"room_positions": PackedVector3Array()
 				}
+			floor_has_teleporter[i] = false
+			teleporter_spawn_chances[i] = (1.0 / room_number) * 2  # Initial spawn chance
 		#print("Floors = ", floors)
 		for floor in range(num_floors):
 			await generate(floor)
@@ -63,8 +71,6 @@ func set_border_size(val : int)->void:
 func set_seed(val:String)->void:
 	custom_seed = val
 	seed(val.hash())
-
-var floors : Array = []
 
 
 func visualize_border():
@@ -242,11 +248,24 @@ func make_room(rec:int, floor_index: int):
 		
 	# Now, add each Vector3 from the `room` to `floors[floor_index]["room_tiles"]`
 	floors[floor_index]["room_tiles"].append(room)
-	print(floors[floor_index]["room_tiles"])
+	#print(floors[floor_index]["room_tiles"])
 	var avg_x : float = start_pos.x + (float(width)/2)
 	var avg_z : float = start_pos.z + (float(height)/2)
 	var center_pos : Vector3 = Vector3(avg_x,y_level,avg_z)
 	floors[floor_index]["room_positions"].append(center_pos)
+	
+	#teleporter spawn code
+	if (floor_has_teleporter[floor_index] == false):
+		if rng.randf() < teleporter_spawn_chances[floor_index]:
+			var teleporter_instance = preload("res://teleporter.tscn").instantiate()
+			add_child(teleporter_instance)  # Adding teleporter to the scene node
+			teleporter_instance.position = center_pos
+			teleporter_instance.set_floor_index(floor_index)  # Set the floor index
+			teleporter_instance.teleport_player.connect(_on_teleport_player)
+			floor_has_teleporter[floor_index] = true # Mark that this floor now has a teleporter
+			print("telepoter ", floor_index, "added")
+		# Increase the chance of spawning a teleporter for this specific floor if teleporter has not spawned yet
+		teleporter_spawn_chances[floor_index] += 1.0/room_number
 	
 func _ready():
 	set_start(true)
@@ -259,182 +278,8 @@ func _ready():
 func _on_dun_mesh_complete():
 	grid_map.clear()
 	$Player.position = floors[0]["room_positions"][0] + Vector3(0,1,0) # Adjust Y to prevent intersection with the floor
-
-
-# Called when the node enters the scene tree for the first time.
-#func _ready():
-	## Get all nodes in the "orbs" group
-	#var orbs = get_tree().get_nodes_in_group("orbs")
-	 #
-	## Connect the collected signal from each orb to the _on_orb_collected function
-	#for orb in orbs:
-		#orb.collected.connect(_orb_type_collected)
-		#
-	#randomize()
-	#var monster_spawned = [true, true, true, true]
-	#var orb_spawned = [true, true, true, true, true, true]
-	#
-	#var spawn_chance = grid_steps
-	#var current_pos = Vector3(0, 0, 0)
-	#
-	#var current_dir = Vector3.RIGHT
-	#var last_dir = current_dir * -1
-	#
-	#var layer_height = 1  # Height difference between layers
-	#var orientation
-	#
-	## Main loop for grid steps
-	#for i in range(0, grid_steps):
-		#var temp_dir = dir.duplicate()
-		#temp_dir.shuffle()
-		#var d = temp_dir.pop_front()
-		#
-		## Ensure the new direction is valid
-		#while(abs(current_pos.x + d.x) > grid_size or abs(current_pos.z + d.z) > grid_size or d == last_dir * -1):
-			#temp_dir.shuffle()
-			#d = temp_dir.pop_front()
-#
-		#current_pos += d
-		#last_dir = d
-		#
-		## Occasionally change layers
-		#if randf() < 0.0025:  # 15% chance to change layer
-			#orientation = get_orientation_index_from_direction(d, 1)
-			#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 0)
-			#current_pos.y += layer_height
-			#current_pos += d
-			#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
-			#current_pos.y += layer_height
-			#current_pos += d
-			#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
-			#current_pos.y += layer_height
-			#current_pos += d
-			#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
-			#current_pos += d
-		#elif randf() < 0.005:  # 15% chance to change layer
-			#orientation = get_orientation_index_from_direction(d, -1)
-			#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
-			#current_pos.y -= layer_height
-			#current_pos += d
-			#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
-			#current_pos.y -= layer_height
-			#current_pos += d
-			#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 3, orientation)
-			#current_pos.y -= layer_height
-			#current_pos += d
-			#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 0)
-			#current_pos += d
-		#
-		#$NavigationRegion3D/GridMap.set_cell_item(current_pos, 0)
-		##$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(0,-1,1), 0)
-		##$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(1,-2,0), 0)
-		#
-		#if (monster_spawned[0]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				## Create a new instance of the Mob scene.
-				#spawn_monster(current_pos, Vector3(0,1.5,0))
-				##monster.position = current_pos + Vector3(0,1.5,0)
-				#monster_spawned[0] = false
-			#
-				#
-		#if (orb_spawned[1]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				##print("orb2")
-				#orb2.position = current_pos + Vector3(0,1.5,0)
-				#orb_spawned[1] = false
-			#
-				#
-		#if (orb_spawned[4]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				##print("orb5")
-				#orb5.position = current_pos + Vector3(0,1.5,0)
-				#orb_spawned[4] = false
-			#
-				#
-		#$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(0,10,10), 0)
-		#if (monster_spawned[1]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				## Create a new instance of the Mob scene.
-				#spawn_monster(current_pos, Vector3(0,11.5,10))
-				##monster.position = current_pos + Vector3(0,1.5,0)
-				#monster_spawned[1] = false
-			#
-		#if (orb_spawned[2]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				##print("orb3")
-				#orb3.position = current_pos + Vector3(0,11.5,10)
-				#orb_spawned[2] = false
-			#
-				#
-		#$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(0,15,-20), 0)
-		#
-		#if (monster_spawned[2]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				## Create a new instance of the Mob scene.
-				#spawn_monster(current_pos, Vector3(0,16.5,-20))
-				##monster.position = current_pos + Vector3(0,1.5,0)
-				#monster_spawned[2] = false
-				#
-		#if (orb_spawned[3]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				##print("orb4")
-				#orb4.position = current_pos + Vector3(0,16.5,-20)
-				#orb_spawned[3] = false
-			#
-				#
-		#$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(8,27,-16), 0)
-		#$NavigationRegion3D/GridMap.set_cell_item(current_pos + Vector3(8,26,-15), 0)
-		#
-		#if (monster_spawned[3]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				## Create a new instance of the Mob scene.
-				#spawn_monster(current_pos, Vector3(8,28.5,-16))
-				##monster.position = current_pos + Vector3(0,1.5,0)
-				#monster_spawned[3] = false
-				#
-		#if (orb_spawned[0]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				##print("orb1")
-				#orb1.position = current_pos + Vector3(8,28.5,-16)
-				#orb_spawned[0] = false
-			#
-		#if (orb_spawned[5]):
-			#if (rng.randi_range(0, spawn_chance) == 0):
-				##print("orb6")
-				#orb6.position = current_pos + Vector3(0,1.5,0)
-				#orb_spawned[5] = false
-			#
-		#if (spawn_chance > 0):
-				#spawn_chance -= 1
-				#
-	##print(spawn_chance)
-	#$NavigationRegion3D.bake_navigation_mesh()
-
-# This function returns an orientation index based on the direction vector.
-func get_orientation_index_from_direction(direction: Vector3, up: int) -> int:
-	if up == 1:
-		if direction == Vector3.RIGHT:
-			return 0
-		elif direction == Vector3.LEFT:
-			return 3
-		elif direction == Vector3.FORWARD:
-			return 7
-		elif direction == Vector3.BACK:
-			return 15
-	elif up == -1:
-		if direction == Vector3.RIGHT:
-			return 3
-		elif direction == Vector3.LEFT:
-			return 0
-		elif direction == Vector3.FORWARD:
-			return 15
-		elif direction == Vector3.BACK:
-			return 7
-	return 0  # Default orientation
-
-func can_spawn_at(pos):
-	# Check if the position is not already occupied by another grid element
-	return $NavigationRegion3D/GridMap.get_cell_item(pos) == -1
+	print(floor_has_teleporter)
+	print(teleporter_spawn_chances)
 
 func _orb_type_collected(orb_type: int):
 	match orb_type:
@@ -472,6 +317,12 @@ func _on_player_hit():
 
 func _on_orb_collected(orb_type):
 	$UI._orb_collected(orb_type)
+	
+func _on_teleport_player(floor_index):
+	#logic to change to the next floor
+	floor_index = floor_index % num_floors # final teleporter teleports back to start
+	$Player.position = floors[floor_index]["room_positions"][0] + Vector3(0,1,0)
+
 	
 func _quit_game():
 	get_tree().quit()

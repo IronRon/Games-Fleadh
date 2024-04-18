@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cbed6efcl7lu7"]
+[gd_scene load_steps=42 format=3 uid="uid://cbed6efcl7lu7"]
 
 [ext_resource type="Script" path="res://imports/DunCell.gd" id="1_32hn5"]
 [ext_resource type="Material" uid="uid://dgw3ja14i3vne" path="res://imports/floor.tres" id="2_megmu"]
@@ -40,6 +40,8 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8fsmp")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hnwlo"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_uxjkv"]
 data = PackedVector3Array(-0.5, -0.0201, 0.5, -0.5, 0.0201, -0.5, -0.5, 0.0201, 0.5, -0.5, -0.0201, 0.5, -0.5, -0.0201, -0.5, -0.5, 0.0201, -0.5, -0.5, -0.0201, -0.5, 0.5, 0.0201, -0.5, -0.5, 0.0201, -0.5, -0.5, -0.0201, -0.5, 0.5, -0.0201, -0.5, 0.5, 0.0201, -0.5, 0.5, -0.0201, -0.5, 0.5, 0.0201, 0.5, 0.5, 0.0201, -0.5, 0.5, -0.0201, -0.5, 0.5, -0.0201, 0.5, 0.5, 0.0201, 0.5, 0.5, -0.0201, 0.5, -0.5, 0.0201, 0.5, 0.5, 0.0201, 0.5, 0.5, -0.0201, 0.5, -0.5, -0.0201, 0.5, -0.5, 0.0201, 0.5, -0.5, -0.0201, -0.5, 0.5, -0.0201, 0.5, 0.5, -0.0201, -0.5, -0.5, -0.0201, -0.5, -0.5, -0.0201, 0.5, 0.5, -0.0201, 0.5, 0.5, 0.0201, -0.5, -0.5, 0.0201, 0.5, -0.5, 0.0201, -0.5, 0.5, 0.0201, -0.5, 0.5, 0.0201, 0.5, -0.5, 0.0201, 0.5)
@@ -386,6 +388,7 @@ transform = Transform3D(1.02128, -5.37336e-16, 0, -6.9999e-16, 1, 0, 0, 0, 1.021
 layers = 2
 mesh = SubResource("ArrayMesh_ag7ji")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_hnwlo")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="floor"]
 collision_layer = 4
