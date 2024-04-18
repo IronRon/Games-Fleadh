@@ -250,9 +250,7 @@ func make_room(rec:int, floor_index: int):
 	
 func _ready():
 	set_start(true)
-	# Get all nodes in the "orbs" group
-	#var orbs = get_tree().get_nodes_in_group("orbs")
-	 
+
 	# Connect the collected signal from each orb to the _on_orb_collected function
 	for orb in orbs:
 		orb.collected.connect(_orb_type_collected)
@@ -260,6 +258,7 @@ func _ready():
 
 func _on_dun_mesh_complete():
 	grid_map.clear()
+	$Player.position = floors[0]["room_positions"][0] + Vector3(0,1,0) # Adjust Y to prevent intersection with the floor
 
 
 # Called when the node enters the scene tree for the first time.
