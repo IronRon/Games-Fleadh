@@ -17,6 +17,14 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "Orbs Collected: 0/6"
 
+[node name="TerminalsRestoredLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 1.0
+offset_top = 29.0
+offset_right = 160.0
+offset_bottom = 52.0
+text = "Terminals Restored: "
+
 [node name="StartScreen" type="ColorRect" parent="."]
 process_mode = 2
 layout_mode = 1

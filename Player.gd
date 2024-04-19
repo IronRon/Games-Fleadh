@@ -97,10 +97,17 @@ func _physics_process(delta):
 			
 			#if collision.get_collider() != null:
 				#print("Collided with:", collision.get_collider().name)
+				
+			if collision.get_collider().is_in_group("terminal"):
+				prompt.text = "Press E restore"
+				if (Input.is_action_pressed("Interact")):
+					var terminal = collision.get_collider()
+					terminal.restore_terminal()
+				break
 			
 			if collision.get_collider().is_in_group("teleporter"):
 				prompt.text = "Press E to Teleport"
-				if (Input.is_action_pressed("Punch")):
+				if (Input.is_action_pressed("Interact")):
 					var teleporter = collision.get_collider()
 					teleporter.teleport()
 				break

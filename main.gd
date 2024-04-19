@@ -296,6 +296,7 @@ func make_room(rec:int, floor_index: int):
 				add_child(terminal_instance)
 				terminal_instance.position = Vector3(safe_positions[random_index])
 				terminal_instance.look_at(center_pos)
+				terminal_instance.terminal_restored.connect(_on_terminal_restored)
 				floor_has_terminal[floor_index] = true
 		# Increase the chance of spawning a terminal next time
 		terminal_spawn_chances[floor_index] += 1.0/room_number
@@ -318,8 +319,8 @@ func _on_dun_mesh_complete():
 	grid_map.clear()
 	$GridMap.visible = true
 	$Player.position = floors[0]["room_positions"][0] + Vector3(0,1,0) # Adjust Y to prevent intersection with the floor
-	print(floor_has_teleporter)
-	print(teleporter_spawn_chances)
+	#print(floor_has_teleporter)
+	#print(teleporter_spawn_chances)
 	
 
 func _orb_type_collected(orb_type: int):
@@ -358,6 +359,9 @@ func _on_player_hit():
 
 func _on_orb_collected(orb_type):
 	$UI._orb_collected(orb_type)
+	
+func _on_terminal_restored():
+	$UI._terminal_restored()
 	
 func _on_teleport_player(floor_index):
 	#logic to change to the next floor

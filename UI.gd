@@ -4,6 +4,7 @@ signal quit
 signal retry
 
 var orb_collected = 0
+var terminals_restored = 0
 
 enum OrbType {
 	STRENGTH,
@@ -21,13 +22,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _orb_collected(orb_type):
-	var label_text
 	
 	orb_collected += 1
 	match orb_type:
@@ -50,8 +45,13 @@ func _orb_collected(orb_type):
 			$OrbPickUpRect/PickUpText.text = "BLOCK_SPAM Orb Collected"
 	text_update()
 
+func _terminal_restored():
+	terminals_restored += 1
+	text_update()
+
 func text_update():
 	$OrbCollectedLabel.text = "Orbs Collected: %s/6" % orb_collected
+	$TerminalsRestoredLabel.text = "Terminals Restored: %s/6" % terminals_restored
 	
 func died_rect():
 	$Menu.color = Color.hex(0xff161753)
