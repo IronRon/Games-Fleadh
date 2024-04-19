@@ -75,5 +75,5 @@ func create_dungeon():
 			t +=1
 			dun_cell.only_floor()
 			
-		if t%20 == 19 : await get_tree().create_timer(0).timeout
+		if t%5 == 4 : await get_tree().create_timer(0).timeout
 	complete.emit()

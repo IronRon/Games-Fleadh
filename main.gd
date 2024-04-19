@@ -268,7 +268,11 @@ func make_room(rec:int, floor_index: int):
 		teleporter_spawn_chances[floor_index] += 1.0/room_number
 	
 func _ready():
+	$CamRig/Camera3D.set_current(true)
+	$CamRig/AnimationPlayer.play("Start")
 	set_start(true)
+	#$Player.camera_set()
+	
 
 	# Connect the collected signal from each orb to the _on_orb_collected function
 	for orb in orbs:
@@ -277,9 +281,15 @@ func _ready():
 
 func _on_dun_mesh_complete():
 	grid_map.clear()
+	#$CamRig/Camera3D.set_current(false)
+	#await get_tree().create_timer(5).timeout
+	#$Player.camera_set()
+	#$UI.visible = true
+	$GridMap.visible = true
 	$Player.position = floors[0]["room_positions"][0] + Vector3(0,1,0) # Adjust Y to prevent intersection with the floor
 	print(floor_has_teleporter)
 	print(teleporter_spawn_chances)
+	
 
 func _orb_type_collected(orb_type: int):
 	match orb_type:
@@ -329,3 +339,8 @@ func _quit_game():
 	
 func _retry_game():
 	get_tree().reload_current_scene()
+
+func _on_camera_3d_animation_complete():
+	$CamRig/Camera3D.set_current(false)
+	$Player.camera_set()
+	$UI.visible = true

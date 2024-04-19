@@ -157,3 +157,6 @@ func die():
 func _on_mob_detector_body_entered(body):
 	#die()
 	pass
+
+func camera_set():
+	$CameraOrigin/SpringArm3D/Camera3D.set_current(true)
