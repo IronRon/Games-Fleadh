@@ -17,6 +17,7 @@ var mob = null
 @onready var pivot = $CameraOrigin
 @onready var anim_tree = $AnimationTree
 @onready var armature = $Visuals
+@onready var prompt = $Prompt
 
 @export var sensitivity = 0.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -34,7 +35,8 @@ func _input(event):
 		pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-90), deg_to_rad(45))
 
 func _physics_process(delta):
-			
+	prompt.text = ""
+	
 	if (self.position.y < -20):
 		die()
 		
@@ -87,11 +89,22 @@ func _physics_process(delta):
 		for index in range(get_slide_collision_count()):
 			# We get one of the collisions with the player
 			var collision = get_slide_collision(index)
-
+			
+			
 			# If the collision is with ground
 			if collision.get_collider() == null:
 				continue
-
+			
+			#if collision.get_collider() != null:
+				#print("Collided with:", collision.get_collider().name)
+			
+			if collision.get_collider().is_in_group("teleporter"):
+				prompt.text = "Press E to Teleport"
+				if (Input.is_action_pressed("Punch")):
+					var teleporter = collision.get_collider()
+					teleporter.teleport()
+				break
+			
 			# If the collider is with a mob
 			if collision.get_collider().is_in_group("monster"):
 				mob = collision.get_collider()
@@ -100,7 +113,6 @@ func _physics_process(delta):
 			# If the collider is with an orb
 			if collision.get_collider().is_in_group("orbs"):
 				var orb = collision.get_collider()
-				#orb.collected.connect($UI/OrbCollectedLabel._on_orb_collected.bind())
 				orb.pick_up()
 				break
 

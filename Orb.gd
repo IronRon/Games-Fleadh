@@ -25,11 +25,6 @@ func _ready():
 	mesh_instance.material_override = new_material
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 # And this function at the bottom.
 func pick_up():
 	collected.emit(orbType)
