@@ -1,4 +1,4 @@
-@tool
+#@tool
 extends Node
 
 const dir = [Vector3.RIGHT, Vector3.LEFT, Vector3.FORWARD, Vector3.BACK]
@@ -26,6 +26,9 @@ var floors : Array = []
 var floor_has_teleporter : Array = []
 var teleporter_spawn_chances : Array = []
 
+var floor_has_terminal : Array = []
+var terminal_spawn_chances : Array = []
+
 var rng = RandomNumberGenerator.new()
 
 @onready var grid_map : GridMap = $GridMap
@@ -34,16 +37,23 @@ var rng = RandomNumberGenerator.new()
 func set_start(val:bool)->void:
 	#if Engine.is_editor_hint():
 		grid_map.clear()
+		
 		floors.resize(num_floors)
 		floor_has_teleporter.resize(num_floors)
 		teleporter_spawn_chances.resize(num_floors)
+		floor_has_terminal.resize(num_floors)
+		terminal_spawn_chances.resize(num_floors)
+		
 		for i in range(num_floors):
 			floors[i] = {
 				"room_tiles": Array(PackedVector3Array()),
 				"room_positions": PackedVector3Array()
 				}
 			floor_has_teleporter[i] = false
+			floor_has_terminal[i] = false
 			teleporter_spawn_chances[i] = (1.0 / room_number) * 2  # Initial spawn chance
+			terminal_spawn_chances[i] = (1.0 / room_number) * 2
+			
 		#print("Floors = ", floors)
 		for floor in range(num_floors):
 			await generate(floor)
@@ -61,8 +71,8 @@ func set_border_size(val : int)->void:
 @export var room_number : int = 4
 @export var room_margin : int = 1
 @export var room_recursion : int = 15
-@export var min_room_size : int = 2 
-@export var max_room_size : int = 8
+@export var min_room_size : int = 3 
+@export var max_room_size : int = 10
 
 @export var num_floors : int = 1
 @export var floor_gap : int = 5
@@ -267,7 +277,34 @@ func make_room(rec:int, floor_index: int):
 		# Increase the chance of spawning a teleporter for this specific floor if teleporter has not spawned yet
 		teleporter_spawn_chances[floor_index] += 1.0/room_number
 	
+	#terminal spawn code
+	# Check if a terminal has not already been spawned on this floor
+	if (floor_has_terminal[floor_index] == false):
+		# Random chance to spawn a terminal based on current floor index
+		if rng.randf() < terminal_spawn_chances[floor_index]:
+			var safe_positions = []
+			# Calculate safe positions within the room, avoiding walls
+			for r in range(1, height - 1):
+				for c in range(1, width - 1):
+					safe_positions.append(start_pos + Vector3i(c, 0, r))
+			
+			safe_positions.erase(center_pos)
+			# Only proceed if there are safe positions available
+			if safe_positions.size() > 0:
+				var random_index = rng.randi() % safe_positions.size()
+				var terminal_instance = preload("res://terminal.tscn").instantiate()
+				add_child(terminal_instance)
+				terminal_instance.position = Vector3(safe_positions[random_index])
+				terminal_instance.look_at(center_pos)
+				floor_has_terminal[floor_index] = true
+		# Increase the chance of spawning a terminal next time
+		terminal_spawn_chances[floor_index] += 1.0/room_number
+	
 func _ready():
+	#if not InputMap.has_action("Pause"):
+		#print("Pause action does not exist.")
+	#else:
+		#print("Pause action exists.")
 	$CamRig/Camera3D.set_current(true)
 	$CamRig/AnimationPlayer.play("Start")
 	set_start(true)
@@ -309,9 +346,9 @@ func spawn_monster(current_pos, level_vector):
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#if Input.is_action_just_pressed("Pause"):
-	#		$UI._show_menu()
-	pass
+	if Input.is_action_just_pressed("Pause"):
+			$UI._show_menu()
+
 	
 func _unhandled_input(event):
 	pass

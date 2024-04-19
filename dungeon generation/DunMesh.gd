@@ -67,6 +67,7 @@ func create_dungeon():
 				else:
 					var key : String = str(cell_index) + str(cell_n_index)
 					call("handle_"+key,dun_cell,directions.keys()[i])
+		#hallways
 		elif cell_index == 1:
 			var dun_cell : Node3D = dun_cell_scene.instantiate()
 			dun_cell.position = Vector3(cell) + Vector3(0.5,0,0.5)
