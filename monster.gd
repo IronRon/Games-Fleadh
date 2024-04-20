@@ -45,7 +45,8 @@ func _process(delta):
 func initialize(start_position, player_position, path_player):
 	# We position the mob by placing it at start_position
 	# and rotate it towards player_position, so it looks at the player.
-	look_at_from_position(start_position, player_position, Vector3.UP)
+	#look_at_from_position(start_position, player_position, Vector3.UP)
+	global_position = start_position
 	
 	player_path = path_player
 

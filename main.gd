@@ -33,6 +33,7 @@ var rng = RandomNumberGenerator.new()
 
 @onready var grid_map : GridMap = $GridMap
 @onready var ui = $UI
+@onready var dunmesh = $NavigationRegion3D/DunMesh
 
 @export var start : bool = false : set = set_start
 func set_start(val:bool)->void:
@@ -58,7 +59,7 @@ func set_start(val:bool)->void:
 		#print("Floors = ", floors)
 		for floor in range(num_floors):
 			await generate(floor)
-		$DunMesh.set_start(true)
+		dunmesh.set_start(true)
 		
 		
 
@@ -304,6 +305,21 @@ func make_room(rec:int, floor_index: int):
 		# Increase the chance of spawning a terminal next time
 		terminal_spawn_chances[floor_index] += 1.0/room_number
 	
+	if rng.randf() < 0.25:
+			var safe_positions = []
+			# Calculate safe positions within the room, avoiding walls
+			for r in range(1, height - 1):
+				for c in range(1, width - 1):
+					safe_positions.append(start_pos + Vector3i(c, 0, r))
+			
+			safe_positions.erase(center_pos)
+			# Only proceed if there are safe positions available
+			if safe_positions.size() > 0:
+				var random_index = rng.randi() % safe_positions.size()
+				var enemy_instance = preload("res://virus_enemy.tscn").instantiate()
+				enemy_instance.initialize(Vector3(safe_positions[random_index]), $Player.position,"../Player")
+				add_child(enemy_instance)
+	
 func _ready():
 	#if not InputMap.has_action("Pause"):
 		#print("Pause action does not exist.")
@@ -323,6 +339,7 @@ func _ready():
 func _on_dun_mesh_complete():
 	grid_map.clear()
 	grid_map.visible = true
+	$NavigationRegion3D.bake_navigation_mesh()
 	$Player.position = floors[0]["room_positions"][0] + Vector3(0,1,0) # Adjust Y to prevent intersection with the floor
 	#print(floor_has_teleporter)
 	#print(teleporter_spawn_chances)

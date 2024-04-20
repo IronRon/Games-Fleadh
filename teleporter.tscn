@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Teleporter.gd" id="1_miekm"]
 [ext_resource type="PackedScene" uid="uid://cvjxibr0abw85" path="res://interaction/interactable.tscn" id="2_16ksh"]
-[ext_resource type="PackedScene" path="res://imports/scifi_teleporter.glb" id="2_htmqq"]
+[ext_resource type="PackedScene" uid="uid://c3ovl8fceih2a" path="res://imports/scifi_teleporter.glb" id="2_htmqq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_foyt4"]
 cull_mode = 1
