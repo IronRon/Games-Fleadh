@@ -373,9 +373,6 @@ func _process(delta):
 			ui._show_menu()
 
 	
-func _unhandled_input(event):
-	pass
-	
 func _on_player_hit():
 	ui.died_rect()
 

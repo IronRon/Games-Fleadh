@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cogarh1by5w4q"]
+
+[ext_resource type="AudioStream" uid="uid://c5rxb0tip2dwn" path="res://music/GameBG2.mp3" id="1_d3r8h"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+process_mode = 3
+stream = ExtResource("1_d3r8h")
+autoplay = true
