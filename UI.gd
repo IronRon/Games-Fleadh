@@ -5,6 +5,9 @@ signal retry
 
 var orb_collected = 0
 var terminals_restored = 0
+var terminals : String = "0" : set = set_number_of_terminals
+func set_number_of_terminals(val:String)->void:
+	terminals = val
 
 enum OrbType {
 	STRENGTH,
@@ -54,7 +57,7 @@ func _prompt_update(prompt: String):
 
 func text_update():
 	$OrbCollectedLabel.text = "Orbs Collected: %s/6" % orb_collected
-	$TerminalsRestoredLabel.text = "Terminals Restored: %s/6" % terminals_restored
+	$TerminalsRestoredLabel.text = "Terminals Restored: %s/%s" % [terminals_restored, terminals]
 	
 func died_rect():
 	$Menu.color = Color.hex(0xff161753)

@@ -106,14 +106,6 @@ func _physics_process(delta):
 			
 			#if collision.get_collider() != null:
 				#print("Collided with:", collision.get_collider().name)
-				
-			
-			if collision.get_collider().is_in_group("teleporter"):
-				prompt.text = "Press E to Teleport"
-				if (Input.is_action_pressed("Interact")):
-					var teleporter = collision.get_collider()
-					teleporter.teleport()
-				break
 			
 			# If the collider is with a mob
 			if collision.get_collider().is_in_group("monster"):

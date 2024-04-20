@@ -32,6 +32,7 @@ var terminal_spawn_chances : Array = []
 var rng = RandomNumberGenerator.new()
 
 @onready var grid_map : GridMap = $GridMap
+@onready var ui = $UI
 
 @export var start : bool = false : set = set_start
 func set_start(val:bool)->void:
@@ -272,6 +273,7 @@ func make_room(rec:int, floor_index: int):
 			teleporter_instance.position = center_pos
 			teleporter_instance.set_floor_index(floor_index)  # Set the floor index
 			teleporter_instance.teleport_player.connect(_on_teleport_player)
+			teleporter_instance.update_prompt.connect(_update_prompt)
 			floor_has_teleporter[floor_index] = true # Mark that this floor now has a teleporter
 			#print("telepoter ", floor_index, " added")
 		# Increase the chance of spawning a teleporter for this specific floor if teleporter has not spawned yet
@@ -309,6 +311,8 @@ func _ready():
 		#print("Pause action exists.")
 	$CamRig/Camera3D.set_current(true)
 	$CamRig/AnimationPlayer.play("Start")
+	ui.set_number_of_terminals(str(num_floors))
+	ui.text_update()
 	set_start(true)
 
 	# Connect the collected signal from each orb to the _on_orb_collected function
@@ -318,7 +322,7 @@ func _ready():
 
 func _on_dun_mesh_complete():
 	grid_map.clear()
-	$GridMap.visible = true
+	grid_map.visible = true
 	$Player.position = floors[0]["room_positions"][0] + Vector3(0,1,0) # Adjust Y to prevent intersection with the floor
 	#print(floor_has_teleporter)
 	#print(teleporter_spawn_chances)
@@ -339,7 +343,7 @@ func _orb_type_collected(orb_type: int):
 		OrbType.BLOCK_SPAM:
 			$Player.spawn_blocks_spam()
 	
-	$UI.orb_rect()
+	ui.orb_rect()
 	
 func spawn_monster(current_pos, level_vector):
 	var mobster = mob_scene.instantiate()
@@ -349,23 +353,23 @@ func spawn_monster(current_pos, level_vector):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("Pause"):
-			$UI._show_menu()
+			ui._show_menu()
 
 	
 func _unhandled_input(event):
 	pass
 	
 func _on_player_hit():
-	$UI.died_rect()
+	ui.died_rect()
 
 func _on_orb_collected(orb_type):
-	$UI._orb_collected(orb_type)
+	ui._orb_collected(orb_type)
 	
 func _on_terminal_restored():
-	$UI._terminal_restored()
+	ui._terminal_restored()
 	
 func _update_prompt(prompt: String):
-	$UI._prompt_update(prompt)
+	ui._prompt_update(prompt)
 	
 func _on_teleport_player(floor_index):
 	#logic to change to the next floor
@@ -382,4 +386,4 @@ func _retry_game():
 func _on_camera_3d_animation_complete():
 	$CamRig/Camera3D.set_current(false)
 	$Player.camera_set()
-	$UI.visible = true
+	ui.visible = true

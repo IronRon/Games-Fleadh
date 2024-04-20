@@ -9,7 +9,7 @@ signal update_prompt(prompt: String)
 @onready var terminal_material: StandardMaterial3D = terminal_meshinstance.mesh.surface_get_material(0)
 
 var is_restored: bool = false
-var prompt_text = "Press E restore"
+var prompt_text = "Press E to Restore Terminal"
 
 func add_highlight() -> void:
 	terminal_meshinstance.set_surface_override_material(0, terminal_material.duplicate())
