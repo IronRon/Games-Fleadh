@@ -4,6 +4,7 @@ extends CharacterBody3D
 signal hit
 
 const ATTACK_RANGE = 2.5
+const ROTATION_SPEED: float = 0.15
 
 var speed = 5.0
 var jump = 5
@@ -63,8 +64,20 @@ func _physics_process(delta):
 			
 
 		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
 		var input_dir = Input.get_vector("Left", "Right", "Up", "Down")
+		var input_angle: float = input_dir.angle_to(Vector2.UP)
+		var input_length: float = input_dir.length()
+
+		# Face character in direction of input
+		if input_length > 0:
+			armature.rotation.y = lerp_angle(
+				armature.rotation.y,
+				# Away from camera
+				pivot.rotation.y + input_angle,
+				#(input_angle if input_angle > (-PI / 2) else 0),
+				ROTATION_SPEED
+			)
+		
 		anim_tree.set("parameters/conditions/running", _running())
 		anim_tree.set("parameters/conditions/run_to_idle", !_running())
 		anim_tree.set("parameters/conditions/jump", jumping())
@@ -74,16 +87,12 @@ func _physics_process(delta):
 		
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		if direction:
-			armature.look_at(position + direction)
-			#print("position:", position)
-			#print("direction:", direction)
-			#print("position - direction:", (position - direction))
+			#armature.look_at(position + direction)
 			velocity.x = direction.x * speed
 			velocity.z = direction.z * speed
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed)
 			velocity.z = move_toward(velocity.z, 0, speed)
-		#rotation.y = lerp_angle(rotation.y, atan2(-velocity.x, -velocity.z), delta * 10.0)
 			
 		# Iterate through all collisions that occurred this frame
 		for index in range(get_slide_collision_count()):
@@ -98,12 +107,6 @@ func _physics_process(delta):
 			#if collision.get_collider() != null:
 				#print("Collided with:", collision.get_collider().name)
 				
-			if collision.get_collider().is_in_group("terminal"):
-				prompt.text = "Press E restore"
-				if (Input.is_action_pressed("Interact")):
-					var terminal = collision.get_collider()
-					terminal.restore_terminal()
-				break
 			
 			if collision.get_collider().is_in_group("teleporter"):
 				prompt.text = "Press E to Teleport"

@@ -297,6 +297,7 @@ func make_room(rec:int, floor_index: int):
 				terminal_instance.position = Vector3(safe_positions[random_index])
 				terminal_instance.look_at(center_pos)
 				terminal_instance.terminal_restored.connect(_on_terminal_restored)
+				terminal_instance.update_prompt.connect(_update_prompt)
 				floor_has_terminal[floor_index] = true
 		# Increase the chance of spawning a terminal next time
 		terminal_spawn_chances[floor_index] += 1.0/room_number
@@ -362,6 +363,9 @@ func _on_orb_collected(orb_type):
 	
 func _on_terminal_restored():
 	$UI._terminal_restored()
+	
+func _update_prompt(prompt: String):
+	$UI._prompt_update(prompt)
 	
 func _on_teleport_player(floor_index):
 	#logic to change to the next floor

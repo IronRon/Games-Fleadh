@@ -1,14 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxib84fbm2b2g"]
+[gd_scene load_steps=7 format=3 uid="uid://bxib84fbm2b2g"]
 
 [ext_resource type="Script" path="res://Terminal.gd" id="1_1jcot"]
 [ext_resource type="PackedScene" uid="uid://h7ksdcidpekx" path="res://terminal/scifi_terminal.glb" id="2_hkbba"]
+[ext_resource type="PackedScene" uid="uid://cvjxibr0abw85" path="res://interaction/interactable.tscn" id="3_12fo3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rdes1"]
+cull_mode = 1
+shading_mode = 0
+albedo_color = Color(0.811765, 0.694118, 0.705882, 1)
+grow = true
+grow_amount = 0.02
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i8m45"]
+size = Vector3(0.4, 1.25, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hyx2i"]
 size = Vector3(0.4, 1.25, 0.4)
 
 [node name="Terminal" type="StaticBody3D" groups=["terminal"]]
 collision_layer = 4
 script = ExtResource("1_1jcot")
+highlight_material = SubResource("StandardMaterial3D_rdes1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.601529, -0.0302517)
@@ -19,4 +31,15 @@ shape = SubResource("BoxShape3D_i8m45")
 [node name="scifi_terminal" parent="MeshInstance3D" instance=ExtResource("2_hkbba")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
+[node name="Interactable" parent="." instance=ExtResource("3_12fo3")]
+
+[node name="CollisionShape3D" parent="Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.601529, -0.0302517)
+shape = SubResource("BoxShape3D_hyx2i")
+
+[connection signal="focused" from="Interactable" to="." method="_on_interactable_focused"]
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]
+[connection signal="unfocused" from="Interactable" to="." method="_on_interactable_unfocused"]
+
 [editable path="MeshInstance3D/scifi_terminal"]
+[editable path="Interactable"]

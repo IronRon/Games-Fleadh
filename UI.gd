@@ -48,6 +48,9 @@ func _orb_collected(orb_type):
 func _terminal_restored():
 	terminals_restored += 1
 	text_update()
+	
+func _prompt_update(prompt: String):
+	$Prompt.text = prompt
 
 func text_update():
 	$OrbCollectedLabel.text = "Orbs Collected: %s/6" % orb_collected

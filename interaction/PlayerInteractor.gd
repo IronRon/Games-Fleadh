@@ -18,7 +18,7 @@ func _physics_process(_delta: float) -> void:
 		cached_closest = new_closest
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact"):
+	if event.is_action_pressed("Interact"):
 		if is_instance_valid(cached_closest):
 			interact(cached_closest)
 
