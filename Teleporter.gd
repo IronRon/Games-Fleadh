@@ -5,7 +5,7 @@ signal update_prompt(prompt: String)
 
 @export var highlight_material: StandardMaterial3D
 
-@onready var teleporter_meshinstance: MeshInstance3D = $MeshInstance3D
+@onready var teleporter_meshinstance: MeshInstance3D = $"MeshInstance3D/scifi_teleporter/14021_Teleportation_Pad_v1_l2"
 @onready var teleporter_material: StandardMaterial3D = teleporter_meshinstance.mesh.surface_get_material(0)
 
 var prompt_text = "Press E to Teleport"

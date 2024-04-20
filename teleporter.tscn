@@ -1,28 +1,23 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7d1385xxayib"]
+[gd_scene load_steps=7 format=3 uid="uid://c7d1385xxayib"]
 
 [ext_resource type="Script" path="res://Teleporter.gd" id="1_miekm"]
 [ext_resource type="PackedScene" uid="uid://cvjxibr0abw85" path="res://interaction/interactable.tscn" id="2_16ksh"]
+[ext_resource type="PackedScene" path="res://imports/scifi_teleporter.glb" id="2_htmqq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_foyt4"]
 cull_mode = 1
 shading_mode = 0
-albedo_color = Color(0.811765, 0.694118, 0.705882, 1)
+albedo_color = Color(0.223529, 0.513726, 0.984314, 1)
 grow = true
-grow_amount = 0.02
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lj0f7"]
-albedo_color = Color(0.227451, 0.207843, 1, 1)
-metallic = 1.0
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_3jsuj"]
-material = SubResource("StandardMaterial3D_lj0f7")
-height = 0.2
+grow_amount = 1.0
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_20qoy"]
 height = 0.1
+radius = 0.574464
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7p6et"]
-height = 0.2
+height = 0.1
+radius = 0.574464
 
 [node name="Teleporter" type="StaticBody3D" groups=["teleporter"]]
 collision_layer = 4
@@ -32,7 +27,9 @@ highlight_material = SubResource("StandardMaterial3D_foyt4")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 layers = 4
-mesh = SubResource("CylinderMesh_3jsuj")
+
+[node name="scifi_teleporter" parent="MeshInstance3D" instance=ExtResource("2_htmqq")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, -0.1, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
@@ -41,11 +38,12 @@ shape = SubResource("CylinderShape3D_20qoy")
 [node name="Interactable" parent="." instance=ExtResource("2_16ksh")]
 
 [node name="CollisionShape3D" parent="Interactable" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 shape = SubResource("CylinderShape3D_7p6et")
 
 [connection signal="focused" from="Interactable" to="." method="_on_interactable_focused"]
 [connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]
 [connection signal="unfocused" from="Interactable" to="." method="_on_interactable_unfocused"]
 
+[editable path="MeshInstance3D/scifi_teleporter"]
 [editable path="Interactable"]

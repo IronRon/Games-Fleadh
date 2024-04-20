@@ -270,7 +270,7 @@ func make_room(rec:int, floor_index: int):
 		if rng.randf() < teleporter_spawn_chances[floor_index]:
 			var teleporter_instance = preload("res://teleporter.tscn").instantiate()
 			add_child(teleporter_instance)  # Adding teleporter to the scene node
-			teleporter_instance.position = center_pos
+			teleporter_instance.position = center_pos + Vector3(0,0.1,0)
 			teleporter_instance.set_floor_index(floor_index)  # Set the floor index
 			teleporter_instance.teleport_player.connect(_on_teleport_player)
 			teleporter_instance.update_prompt.connect(_update_prompt)
