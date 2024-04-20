@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c7d1385xxayib"]
+[gd_scene load_steps=8 format=3 uid="uid://c7d1385xxayib"]
 
 [ext_resource type="Script" path="res://Teleporter.gd" id="1_miekm"]
 [ext_resource type="PackedScene" uid="uid://cvjxibr0abw85" path="res://interaction/interactable.tscn" id="2_16ksh"]
 [ext_resource type="PackedScene" uid="uid://c3ovl8fceih2a" path="res://imports/scifi_teleporter.glb" id="2_htmqq"]
+[ext_resource type="AudioStream" uid="uid://cbuixw07w38qn" path="res://music/teleport.mp3" id="4_mfmeb"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_foyt4"]
 cull_mode = 1
@@ -40,6 +41,9 @@ shape = SubResource("CylinderShape3D_20qoy")
 [node name="CollisionShape3D" parent="Interactable" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 shape = SubResource("CylinderShape3D_7p6et")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_mfmeb")
 
 [connection signal="focused" from="Interactable" to="." method="_on_interactable_focused"]
 [connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]

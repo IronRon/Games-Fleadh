@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxib84fbm2b2g"]
+[gd_scene load_steps=8 format=3 uid="uid://bxib84fbm2b2g"]
 
 [ext_resource type="Script" path="res://Terminal.gd" id="1_1jcot"]
 [ext_resource type="PackedScene" uid="uid://h7ksdcidpekx" path="res://terminal/scifi_terminal.glb" id="2_hkbba"]
 [ext_resource type="PackedScene" uid="uid://cvjxibr0abw85" path="res://interaction/interactable.tscn" id="3_12fo3"]
+[ext_resource type="AudioStream" uid="uid://44ugs4gdakyv" path="res://music/terminal_restore.mp3" id="4_yqpse"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rdes1"]
 cull_mode = 1
@@ -36,6 +37,9 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 [node name="CollisionShape3D" parent="Interactable" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.601529, -0.0302517)
 shape = SubResource("BoxShape3D_hyx2i")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_yqpse")
 
 [connection signal="focused" from="Interactable" to="." method="_on_interactable_focused"]
 [connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]

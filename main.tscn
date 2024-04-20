@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://jyo0nch4uijq"]
+[gd_scene load_steps=18 format=3 uid="uid://jyo0nch4uijq"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_iluoh"]
 [ext_resource type="PackedScene" uid="uid://brn6qw74chkcw" path="res://player.tscn" id="1_kovm6"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cbed6efcl7lu7" path="res://imports/DunCell.tscn" id="5_drocs"]
 [ext_resource type="PackedScene" uid="uid://fvvlvtgutkbj" path="res://ui.tscn" id="7_mh3s0"]
 [ext_resource type="Texture2D" uid="uid://dhvj7sa04f7st" path="res://Digiverse.png" id="8_sq4ox"]
-[ext_resource type="PackedScene" uid="uid://cw56spyglnnt7" path="res://virus_enemy.tscn" id="9_ih75s"]
 [ext_resource type="Script" path="res://Camera3D.gd" id="12_cx4xq"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_4yhln"]
@@ -2691,10 +2690,6 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_kovm6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5, 1, 3.5)
-
-[node name="Virus_Enemy" parent="." instance=ExtResource("9_ih75s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.6129, 39.5157, 24.9904)
-player_path = NodePath("../Player")
 
 [node name="UI" parent="." instance=ExtResource("7_mh3s0")]
 visible = false

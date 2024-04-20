@@ -26,6 +26,7 @@ func _on_interactable_focused(interactor):
 
 func _on_interactable_interacted(interactor):
 	$Interactable.queue_free()
+	$AudioStreamPlayer3D.play()
 	#remove_from_group("terminal")
 	terminal_restored.emit()
 

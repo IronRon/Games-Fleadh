@@ -26,6 +26,7 @@ func _on_interactable_focused(interactor):
 	add_highlight()
 
 func _on_interactable_interacted(interactor):
+	$AudioStreamPlayer3D.play()
 	teleport_player.emit(floor_index)
 
 func _on_interactable_unfocused(interactor):

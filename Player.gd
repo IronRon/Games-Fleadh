@@ -18,7 +18,6 @@ var mob = null
 @onready var pivot = $CameraOrigin
 @onready var anim_tree = $AnimationTree
 @onready var armature = $Visuals
-@onready var prompt = $Prompt
 
 @export var sensitivity = 0.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -36,7 +35,6 @@ func _input(event):
 		pivot.rotation.x = clamp(pivot.rotation.x, deg_to_rad(-90), deg_to_rad(45))
 
 func _physics_process(delta):
-	prompt.text = ""
 	
 	if (self.position.y < -20):
 		die()
@@ -114,6 +112,7 @@ func _physics_process(delta):
 				
 			# If the collider is with an orb
 			if collision.get_collider().is_in_group("orbs"):
+				$AudioStreamPlayer3D.play()
 				var orb = collision.get_collider()
 				orb.pick_up()
 				break
