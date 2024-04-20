@@ -55,7 +55,7 @@ func _target_in_range():
 	
 func _hit_finished():
 	if global_position.distance_to(player.global_position) < ATTACK_RANGE + 0.7:
-		player.die()
+		player.damage_taken()
 
 		
 func die():

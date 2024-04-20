@@ -373,8 +373,8 @@ func _process(delta):
 			ui._show_menu()
 
 	
-func _on_player_hit():
-	ui.died_rect()
+func _on_player_hit(damage):
+	ui.player_hit(damage)
 
 func _on_orb_collected(orb_type):
 	ui._orb_collected(orb_type)
@@ -401,3 +401,6 @@ func _on_camera_3d_animation_complete():
 	$CamRig/Camera3D.set_current(false)
 	$Player.camera_set()
 	ui.visible = true
+
+func _on_player_dead():
+	ui.died_rect()

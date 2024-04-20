@@ -1,11 +1,13 @@
 extends CharacterBody3D
 
 # Emitted when the player was hit by a mob.
-signal hit
+signal hit(damage:int)
+signal dead
 
 const ATTACK_RANGE = 2.5
 const ROTATION_SPEED: float = 0.15
 
+var health = 100
 var speed = 5.0
 var jump = 5
 var strength = 5.0
@@ -36,7 +38,7 @@ func _input(event):
 
 func _physics_process(delta):
 	
-	if (self.position.y < -20):
+	if (self.position.y < -20 || health <= 0):
 		die()
 		
 	if alive:
@@ -162,10 +164,14 @@ func place_block():
 	
 # And this function at the bottom.
 func die():
-	hit.emit()
+	dead.emit()
 	visible = false
 	alive = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func damage_taken():
+	health -= 5
+	hit.emit(5)
 
 func _on_mob_detector_body_entered(body):
 	#die()
