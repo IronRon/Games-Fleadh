@@ -69,21 +69,28 @@ func _orb_collected(orb_type):
 	match orb_type:
 		OrbType.STRENGTH:
 			$OrbPickUpRect/PickUpText.text = "STRENGTH Orb Collected"
-			
+			$PlayerHUD/StrengthOrb.visible = true
+			$Menu/StrengthOrb.visible = true
 		OrbType.SPEED:
 			$OrbPickUpRect/PickUpText.text = "SPEED Orb Collected"
-			
+			$PlayerHUD/SpeedOrb.visible = true
+			$Menu/SpeedOrb.visible = true
 		OrbType.JUMP:
 			$OrbPickUpRect/PickUpText.text = "JUMP Orb Collected"
-			
+			$PlayerHUD/JumpOrb.visible = true
+			$Menu/JumpOrb.visible = true
 		OrbType.TELEPORT:
 			$OrbPickUpRect/PickUpText.text = "TELEPORT Orb Collected"
-			
+			$PlayerHUD/TeleportOrb.visible = true
+			$Menu/TeleportOrb.visible = true
 		OrbType.BLOCK:
 			$OrbPickUpRect/PickUpText.text = "BLOCK Orb Collected"
-			
+			$PlayerHUD/BlockOrb.visible = true
+			$Menu/BlockOrb.visible = true
 		OrbType.BLOCK_SPAM:
 			$OrbPickUpRect/PickUpText.text = "BLOCK_SPAM Orb Collected"
+			$PlayerHUD/Block_SpamOrb.visible = true
+			$Menu/Block_SpamOrb.visible = true
 	text_update()
 
 func _terminal_restored():
@@ -146,7 +153,6 @@ func time_left():
 func _on_close_pressed():
 	$Menu.hide()
 	$Menu/DeadText.visible = false
-	$Menu.color = Color.hex(0x0000002c)
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	get_tree().paused = false
 

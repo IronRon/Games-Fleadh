@@ -1,6 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://fvvlvtgutkbj"]
+[gd_scene load_steps=12 format=3 uid="uid://fvvlvtgutkbj"]
 
 [ext_resource type="Script" path="res://UI.gd" id="1_6b8of"]
+[ext_resource type="Texture2D" uid="uid://daglw6j3ub4t" path="res://orb_pngs/cyan_orb.png" id="2_gm01v"]
+[ext_resource type="Texture2D" uid="uid://04jk62q8jyqw" path="res://orb_pngs/purple_orb.png" id="3_s1uvk"]
+[ext_resource type="Texture2D" uid="uid://r33xmvfcjju1" path="res://orb_pngs/blue_orb.png" id="4_yl00w"]
+[ext_resource type="Texture2D" uid="uid://do2vnsdmgwcae" path="res://orb_pngs/yellow_orb.png" id="5_trkdq"]
+[ext_resource type="Texture2D" uid="uid://codf53jm54wlh" path="res://orb_pngs/green_orb.png" id="6_n6o5b"]
+[ext_resource type="Texture2D" uid="uid://cx03bx23isb7d" path="res://orb_pngs/red_orb.png" id="7_jbv56"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qamla"]
 
@@ -93,18 +99,18 @@ uppercase = true
 
 [node name="OrbCollectedLabel" type="Label" parent="PlayerHUD"]
 layout_mode = 0
-offset_left = 13.0
-offset_top = 49.0
-offset_right = 159.0
-offset_bottom = 72.0
+offset_left = 16.0
+offset_top = 113.0
+offset_right = 162.0
+offset_bottom = 136.0
 text = "Orbs Collected: 0/6"
 
 [node name="TerminalsRestoredLabel" type="Label" parent="PlayerHUD"]
 layout_mode = 1
-offset_left = 12.0
-offset_top = 80.0
-offset_right = 171.0
-offset_bottom = 103.0
+offset_left = 15.0
+offset_top = 83.0
+offset_right = 174.0
+offset_bottom = 106.0
 text = "Terminals Restored: "
 
 [node name="TimerLabel" type="Label" parent="PlayerHUD"]
@@ -122,6 +128,66 @@ text = "00:00"
 [node name="LevelTimer" type="Timer" parent="PlayerHUD"]
 wait_time = 120.0
 one_shot = true
+
+[node name="Block_SpamOrb" type="TextureRect" parent="PlayerHUD"]
+visible = false
+layout_mode = 1
+offset_left = 9.0
+offset_top = 37.0
+offset_right = 1033.0
+offset_bottom = 1061.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_gm01v")
+
+[node name="BlockOrb" type="TextureRect" parent="PlayerHUD"]
+visible = false
+layout_mode = 1
+offset_left = 209.0
+offset_top = 37.0
+offset_right = 1233.0
+offset_bottom = 1061.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("3_s1uvk")
+
+[node name="SpeedOrb" type="TextureRect" parent="PlayerHUD"]
+visible = false
+layout_mode = 1
+offset_left = 169.0
+offset_top = 37.0
+offset_right = 1193.0
+offset_bottom = 1061.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("4_yl00w")
+
+[node name="TeleportOrb" type="TextureRect" parent="PlayerHUD"]
+visible = false
+layout_mode = 1
+offset_left = 129.0
+offset_top = 37.0
+offset_right = 1153.0
+offset_bottom = 1061.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("5_trkdq")
+
+[node name="JumpOrb" type="TextureRect" parent="PlayerHUD"]
+visible = false
+layout_mode = 1
+offset_left = 89.0
+offset_top = 37.0
+offset_right = 1113.0
+offset_bottom = 1061.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("6_n6o5b")
+
+[node name="StrengthOrb" type="TextureRect" parent="PlayerHUD"]
+visible = false
+layout_mode = 1
+offset_left = 49.0
+offset_top = 37.0
+offset_right = 1073.0
+offset_bottom = 1061.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("7_jbv56")
 
 [node name="StartScreen" type="ColorRect" parent="."]
 process_mode = 2
@@ -236,7 +302,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.172549)
+color = Color(0, 0, 0, 0.776471)
 
 [node name="Close" type="Button" parent="Menu"]
 layout_mode = 1
@@ -296,6 +362,254 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "YOU DIED"
 
+[node name="Block_SpamOrb" type="TextureRect" parent="Menu"]
+visible = false
+offset_left = 10.0
+offset_top = 37.0
+offset_right = 1034.0
+offset_bottom = 1061.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_gm01v")
+
+[node name="Label" type="Label" parent="Menu/Block_SpamOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 46.0
+offset_top = -132.0
+offset_right = 1583.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Block Spam Orb"
+
+[node name="Label2" type="Label" parent="Menu/Block_SpamOrb"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = -394.0
+offset_right = 1912.0
+offset_bottom = -117.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 100
+text = "Hold right-click to place blocks 
+continuously"
+
+[node name="BlockOrb" type="TextureRect" parent="Menu"]
+visible = false
+offset_left = 10.0
+offset_top = 414.0
+offset_right = 1034.0
+offset_bottom = 1438.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_s1uvk")
+
+[node name="Label" type="Label" parent="Menu/BlockOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 36.0
+offset_top = -132.0
+offset_right = 1573.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Block Orb"
+
+[node name="Label2" type="Label" parent="Menu/BlockOrb"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.9999
+offset_top = -394.0
+offset_right = 1922.0
+offset_bottom = -257.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 100
+text = "Press right-click to place a block"
+
+[node name="SpeedOrb" type="TextureRect" parent="Menu"]
+visible = false
+offset_left = 10.0
+offset_top = 341.0
+offset_right = 1034.0
+offset_bottom = 1365.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_yl00w")
+
+[node name="Label" type="Label" parent="Menu/SpeedOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 25.9999
+offset_top = -132.0
+offset_right = 1257.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Speed Orb"
+
+[node name="Label2" type="Label" parent="Menu/SpeedOrb"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.9999
+offset_top = -394.0
+offset_right = 1922.0
+offset_bottom = -257.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 100
+text = "Hold shift to run"
+
+[node name="TeleportOrb" type="TextureRect" parent="Menu"]
+visible = false
+offset_left = 10.0
+offset_top = 267.0
+offset_right = 1034.0
+offset_bottom = 1291.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("5_trkdq")
+
+[node name="Label" type="Label" parent="Menu/TeleportOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 25.9999
+offset_top = -132.0
+offset_right = 1257.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Teleport Orb"
+
+[node name="Label2" type="Label" parent="Menu/TeleportOrb"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = -414.0
+offset_right = 1912.0
+offset_bottom = -137.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 100
+text = "Press Q and walk in a direction to 
+teleport in front of you"
+
+[node name="JumpOrb" type="TextureRect" parent="Menu"]
+visible = false
+offset_left = 9.0
+offset_top = 189.0
+offset_right = 1033.0
+offset_bottom = 1213.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("6_n6o5b")
+
+[node name="Label" type="Label" parent="Menu/JumpOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 25.9999
+offset_top = -132.0
+offset_right = 1257.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Jump Orb"
+
+[node name="Label2" type="Label" parent="Menu/JumpOrb"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.9999
+offset_top = -394.0
+offset_right = 1922.0
+offset_bottom = -257.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 100
+text = "Jumps are now higher"
+
+[node name="StrengthOrb" type="TextureRect" parent="Menu"]
+visible = false
+offset_left = 10.0
+offset_top = 111.0
+offset_right = 1034.0
+offset_bottom = 1135.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_jbv56")
+
+[node name="Label" type="Label" parent="Menu/StrengthOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 25.9999
+offset_top = -132.0
+offset_right = 1257.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 200
+text = "Strength Orb"
+
+[node name="Label2" type="Label" parent="Menu/StrengthOrb"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 65.9999
+offset_top = -394.0
+offset_right = 1922.0
+offset_bottom = -257.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 100
+text = "Attacks are now stronger"
+
 [node name="OrbPickUpRect" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
@@ -308,13 +622,16 @@ color = Color(0.117647, 1, 0.109804, 0.356863)
 
 [node name="PickUpText" type="Label" parent="OrbPickUpRect"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -98.5
-offset_right = 98.5
-offset_bottom = 42.0
+anchor_bottom = 1.0
+offset_left = -165.0
+offset_top = -69.0
+offset_right = 165.0
 grow_horizontal = 2
+grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 text = "Orb Collected"
 
