@@ -12,8 +12,8 @@ var speed = 5.0
 var jump = 5
 var strength = 5.0
 var density = 5.0
-var block = true
-var block_spam = true
+var block = false
+var block_spam = false
 
 var alive = true
 var mob = null
@@ -147,12 +147,6 @@ func spawn_blocks():
 	
 func spawn_blocks_spam():
 	block_spam = true
-
-func _hit_finished():
-	if mob != null:
-		if global_position.distance_to(mob.global_position) < ATTACK_RANGE + 0.7:
-			mob.die()
-	
 	
 func place_block():
 	var player_position = $"../GridMap".local_to_map($CollisionShape3D.global_transform.origin - Vector3(0,1,0))

@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhu6qkg43dbgv"]
+[gd_scene load_steps=6 format=3 uid="uid://bhu6qkg43dbgv"]
+
+[ext_resource type="Script" path="res://HealthBar.gd" id="1_mosvl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wy1ml"]
 
@@ -23,6 +25,7 @@ offset_bottom = 40.0
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
+handle_input_locally = false
 size = Vector2i(256, 256)
 render_target_update_mode = 4
 
@@ -45,6 +48,7 @@ theme_override_styles/background = SubResource("StyleBoxEmpty_wy1ml")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4ygsg")
 value = 60.0
 show_percentage = false
+script = ExtResource("1_mosvl")
 
 [node name="DamageBar" type="ProgressBar" parent="SubViewport/HealthBar"]
 z_index = -1
@@ -62,3 +66,5 @@ show_percentage = false
 [node name="Timer" type="Timer" parent="SubViewport/HealthBar"]
 wait_time = 0.4
 one_shot = true
+
+[connection signal="timeout" from="SubViewport/HealthBar/Timer" to="SubViewport/HealthBar" method="_on_timer_timeout"]

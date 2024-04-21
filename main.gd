@@ -256,7 +256,7 @@ func make_room(rec:int, floor_index: int):
 					break  # Exit the loop after placing an orb
 					
 			# Increase spawn chance by a calculated factor to ensure it approaches 100%
-			initial_spawn_chance += (1.0 - initial_spawn_chance) * 0.1  # Increase spawn chance by 10% of the remaining probability
+			initial_spawn_chance += (1.0 - initial_spawn_chance) * 0.05  # Increase spawn chance by 10% of the remaining probability
 		
 	# Now, add each Vector3 from the `room` to `floors[floor_index]["room_tiles"]`
 	floors[floor_index]["room_tiles"].append(room)
@@ -305,7 +305,7 @@ func make_room(rec:int, floor_index: int):
 		# Increase the chance of spawning a terminal next time
 		terminal_spawn_chances[floor_index] += 1.0/room_number
 	
-	if rng.randf() < 0.25:
+	if rng.randf() < 0.3:
 			var safe_positions = []
 			# Calculate safe positions within the room, avoiding walls
 			for r in range(1, height - 1):
@@ -372,7 +372,6 @@ func _process(delta):
 	if Input.is_action_just_pressed("Pause"):
 			ui._show_menu()
 
-	
 func _on_player_hit(damage):
 	ui.player_hit(damage)
 
@@ -389,7 +388,6 @@ func _on_teleport_player(floor_index):
 	#logic to change to the next floor
 	floor_index = floor_index % num_floors # final teleporter teleports back to start
 	$Player.position = floors[floor_index]["room_positions"][0] + Vector3(0,1,0)
-
 	
 func _quit_game():
 	get_tree().quit()

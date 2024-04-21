@@ -19,7 +19,10 @@ func _physics_process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interact"):
-		if is_instance_valid(cached_closest):
+		if is_instance_valid(cached_closest) and !cached_closest.is_enemy():
+			interact(cached_closest)
+	elif event.is_action_pressed("Punch"):
+		if is_instance_valid(cached_closest) and cached_closest.is_enemy():
 			interact(cached_closest)
 
 func _on_area_exited(area: Interactable) -> void:

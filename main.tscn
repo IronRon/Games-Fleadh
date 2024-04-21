@@ -63,7 +63,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_fkk5h"]
 resource_name = "Start"
-length = 5.0
+length = 10.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -71,7 +71,7 @@ tracks/0/path = NodePath(".:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5, 3),
+"times": PackedFloat32Array(0, 3, 6),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(0, -2.35619, 0), Vector3(-0.251327, -0.764454, 0), Vector3(-0.502655, 0.827286, 0)]
@@ -83,7 +83,7 @@ tracks/1/path = NodePath(".:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5, 3),
+"times": PackedFloat32Array(0, 3, 6),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector3(0, 0, 0), Vector3(-0.23299, 18.0691, 48.5323), Vector3(46.5442, 36.1382, 49.1445)]
@@ -95,7 +95,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(5),
+"times": PackedFloat32Array(10),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -112,10 +112,10 @@ _data = {
 [node name="Main" type="Node"]
 script = ExtResource("1_iluoh")
 mob_scene = ExtResource("3_50agt")
-survival_chance = 0.4
+survival_chance = 0.5
 border_size = 50
-room_number = 5
-max_room_size = 12
+room_number = 6
+max_room_size = 15
 num_floors = 5
 floor_gap = 8
 
