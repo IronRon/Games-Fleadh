@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://fvvlvtgutkbj"]
+[gd_scene load_steps=13 format=3 uid="uid://fvvlvtgutkbj"]
 
 [ext_resource type="Script" path="res://UI.gd" id="1_6b8of"]
 [ext_resource type="Texture2D" uid="uid://daglw6j3ub4t" path="res://orb_pngs/cyan_orb.png" id="2_gm01v"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://do2vnsdmgwcae" path="res://orb_pngs/yellow_orb.png" id="5_trkdq"]
 [ext_resource type="Texture2D" uid="uid://codf53jm54wlh" path="res://orb_pngs/green_orb.png" id="6_n6o5b"]
 [ext_resource type="Texture2D" uid="uid://cx03bx23isb7d" path="res://orb_pngs/red_orb.png" id="7_jbv56"]
+[ext_resource type="Texture2D" uid="uid://dqaskx4mp5x2g" path="res://Random_Access_Runner.png" id="8_ldh3u"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qamla"]
 
@@ -233,7 +234,7 @@ offset_bottom = 1061.0
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("7_jbv56")
 
-[node name="StartScreen" type="ColorRect" parent="."]
+[node name="StartScreen" type="TextureRect" parent="."]
 process_mode = 2
 layout_mode = 1
 anchors_preset = 15
@@ -241,7 +242,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.282353, 0.32549, 0.913725, 1)
+texture = ExtResource("8_ldh3u")
+expand_mode = 1
 
 [node name="Title" type="Label" parent="StartScreen"]
 layout_mode = 1
@@ -249,12 +251,16 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -386.0
-offset_top = 49.0
+offset_top = 65.0
 offset_right = 387.0
-offset_bottom = 132.0
+offset_bottom = 148.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0.713726, 1, 0.94902, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 60
-text = "Games Fleadh Game Thing"
+text = "Random Access Runner"
+horizontal_alignment = 1
 
 [node name="Objective" type="Label" parent="StartScreen"]
 layout_mode = 1
@@ -269,8 +275,12 @@ offset_right = 20.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 26
-text = "Collect all the orbs and defeat the monsters"
+text = "A Virus has Hackedyour Computer.
+Restore the terminals to svae the day."
+horizontal_alignment = 1
 
 [node name="Controls" type="Label" parent="StartScreen"]
 layout_mode = 1
@@ -281,9 +291,9 @@ offset_top = -11.5
 offset_right = 40.0
 offset_bottom = 11.5
 grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Press Esc to Pause
-Press Shift to place blocks 
-with block orb
 Click to punch"
 
 [node name="Normal" type="Button" parent="StartScreen"]
