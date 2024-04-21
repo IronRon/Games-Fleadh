@@ -5,6 +5,7 @@ signal hit(damage:int)
 signal dead
 signal attack_up(strength:int)
 signal blocks_remaining(blocks:int)
+signal teleported
 
 const ATTACK_RANGE = 2.5
 const ROTATION_SPEED: float = 0.15
@@ -29,6 +30,8 @@ var mob = null
 @onready var pivot = $CameraOrigin
 @onready var anim_tree = $AnimationTree
 @onready var armature = $Visuals
+@onready var teleportsound = preload("res://music/teleport-darker.wav")
+@onready var orbsound = preload("res://music/orb_pickup.wav")
 
 @export var sensitivity = 0.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -97,6 +100,9 @@ func _physics_process(delta):
 		
 		if (Input.is_action_pressed("Teleport")) and teleport:
 			position += Vector3(direction.x, 0, direction.z)
+			$AudioStreamPlayer3D.stream = teleportsound
+			$AudioStreamPlayer3D.volume_db = 0
+			$AudioStreamPlayer3D.play()
 			teleport_cooldown()
 			
 		if direction:
@@ -127,6 +133,8 @@ func _physics_process(delta):
 				
 			# If the collider is with an orb
 			if collision.get_collider().is_in_group("orbs"):
+				$AudioStreamPlayer3D.stream = orbsound
+				$AudioStreamPlayer3D.volume_db = -20
 				$AudioStreamPlayer3D.play()
 				var orb = collision.get_collider()
 				orb.pick_up()
@@ -155,6 +163,7 @@ func _teleport(amount: float):
 	
 func teleport_cooldown():
 	teleport = false
+	teleported.emit()
 	await get_tree().create_timer(5).timeout
 	teleport = true
 	

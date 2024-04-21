@@ -432,3 +432,6 @@ func _on_ui_game_over():
 
 func _on_player_blocks_remaining(blocks):
 	ui.block_num_update(blocks)
+
+func _on_player_teleported():
+	ui.player_teleported()

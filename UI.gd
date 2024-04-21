@@ -12,6 +12,8 @@ signal game_over
 @onready var health_bar = $PlayerHUD/HealthBar
 @onready var timerlabel = $PlayerHUD/TimerLabel
 @onready var LevelTimer = $PlayerHUD/LevelTimer
+@onready var teleportTimer = $PlayerHUD/TeleportRecharge/TeleportTimer
+@onready var teleport_bar = $PlayerHUD/TeleportRecharge
 
 var level_time = 120
 var terminal_fix_time = 20
@@ -55,6 +57,10 @@ func _ready():
 	
 func _process(delta):
 	timerlabel.text = "%02d:%02d" % time_left()
+	 # Update the progress bar as the timer counts down.
+	var time_passed = teleportTimer.time_left
+	var progress = (5 - time_passed) / 5 * 100  # Calculate progress percentage.
+	teleport_bar.value = progress
 
 func init_health(_health):
 	health = _health
@@ -124,6 +130,10 @@ func player_hit(damage):
 	await get_tree().create_timer(0.2).timeout
 	$PlayerHUD/HitRect.visible = false
 	
+func player_teleported():
+	$PlayerHUD/TeleportRecharge.visible = true
+	$PlayerHUD/TeleportRecharge/TeleportTimer.start()
+	
 func orb_rect():
 	$OrbPickUpRect.visible = true
 	await get_tree().create_timer(0.2).timeout
@@ -190,3 +200,7 @@ func _on_normal_pressed():
 
 func _on_level_timer_timeout():
 	game_over.emit()
+
+
+func _on_teleport_timer_timeout():
+	$PlayerHUD/TeleportRecharge.visible = false
