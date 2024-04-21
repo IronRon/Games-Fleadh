@@ -2717,6 +2717,7 @@ libraries = {
 [connection signal="collected" from="Orb4" to="." method="_on_orb_collected"]
 [connection signal="collected" from="Orb5" to="." method="_on_orb_collected"]
 [connection signal="collected" from="Orb6" to="." method="_on_orb_collected"]
+[connection signal="blocks_remaining" from="Player" to="." method="_on_player_blocks_remaining"]
 [connection signal="dead" from="Player" to="." method="_on_player_dead"]
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="game_over" from="UI" to="." method="_on_ui_game_over"]

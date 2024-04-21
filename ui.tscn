@@ -113,6 +113,14 @@ offset_right = 174.0
 offset_bottom = 106.0
 text = "Terminals Restored: "
 
+[node name="BlockCount" type="Label" parent="PlayerHUD"]
+visible = false
+offset_left = 16.0
+offset_top = 143.0
+offset_right = 162.0
+offset_bottom = 166.0
+text = "Blocks Left:"
+
 [node name="TimerLabel" type="Label" parent="PlayerHUD"]
 layout_mode = 1
 anchors_preset = 5

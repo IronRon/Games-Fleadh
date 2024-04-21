@@ -4,6 +4,7 @@ extends CharacterBody3D
 signal hit(damage:int)
 signal dead
 signal attack_up(strength:int)
+signal blocks_remaining(blocks:int)
 
 const ATTACK_RANGE = 2.5
 const ROTATION_SPEED: float = 0.15
@@ -95,7 +96,8 @@ func _physics_process(delta):
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		
 		if (Input.is_action_pressed("Teleport")) and teleport:
-			position += Vector3(direction.x * 0.5, 0, direction.z * 0.5)
+			position += Vector3(direction.x, 0, direction.z)
+			teleport_cooldown()
 			
 		if direction:
 			#armature.look_at(position + direction)
@@ -151,13 +153,20 @@ func increase_strength(amount: float):
 func _teleport(amount: float):
 	teleport = true
 	
+func teleport_cooldown():
+	teleport = false
+	await get_tree().create_timer(5).timeout
+	teleport = true
+	
 func increase_jump(amount: float):
 	jump += amount
 	
 func spawn_blocks():
+	blocks_remaining.emit(blocks)
 	block = true
 	
 func spawn_blocks_spam():
+	blocks_remaining.emit(blocks)
 	block_spam = true
 	
 func place_block():
@@ -168,6 +177,7 @@ func place_block():
 		#print($PlayerMesh.global_transform.origin - Vector3(0, 2, 0))
 		$"../GridMap".set_cell_item(player_position_int, 4)
 		blocks -= 1
+		blocks_remaining.emit(blocks)
 		await get_tree().create_timer(5).timeout
 		$"../GridMap".set_cell_item(player_position_int, -1)
 		

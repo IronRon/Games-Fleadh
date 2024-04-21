@@ -30,6 +30,7 @@ func _set_health(new_health):
 	else:
 		damage_bar.value = health
 
+var blocks = 0
 var orb_collected = 0
 var terminals_restored = 0
 var terminals : String = "0" : set = set_number_of_terminals
@@ -99,12 +100,18 @@ func _terminal_restored():
 	LevelTimer.start()
 	text_update()
 	
+func block_num_update(_blocks):
+	$PlayerHUD/BlockCount.visible = true
+	blocks = _blocks
+	text_update()
+	
 func _prompt_update(prompt: String):
 	$PlayerHUD/Prompt.text = prompt
 
 func text_update():
 	$PlayerHUD/OrbCollectedLabel.text = "Orbs Collected: %s/6" % orb_collected
 	$PlayerHUD/TerminalsRestoredLabel.text = "Terminals Restored: %s/%s" % [terminals_restored, terminals]
+	$PlayerHUD/BlockCount.text = "Blocks Left: %s" % blocks
 	
 func died_rect():
 	$Menu.color = Color.hex(0xff161753)
@@ -116,13 +123,11 @@ func player_hit(damage):
 	$PlayerHUD/HitRect.visible = true
 	await get_tree().create_timer(0.2).timeout
 	$PlayerHUD/HitRect.visible = false
-
 	
 func orb_rect():
 	$OrbPickUpRect.visible = true
 	await get_tree().create_timer(0.2).timeout
 	$OrbPickUpRect.visible = false
-
 
 func _on_quit_buuton_pressed():
 	quit.emit()
@@ -182,7 +187,6 @@ func _on_normal_pressed():
 	level_time = 240
 	terminal_fix_time = 15
 	_on_start_pressed()
-
 
 func _on_level_timer_timeout():
 	game_over.emit()

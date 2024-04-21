@@ -429,3 +429,6 @@ func set_difficulty(difficulty):
 
 func _on_ui_game_over():
 	$Player.die()
+
+func _on_player_blocks_remaining(blocks):
+	ui.block_num_update(blocks)
