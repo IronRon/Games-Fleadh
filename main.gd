@@ -392,6 +392,7 @@ func _on_camera_3d_animation_complete():
 	$CamRig/Camera3D.set_current(false)
 	$Player.camera_set()
 	get_tree().paused = false
+	ui.show_HUD()
 	#ui.visible = true
 
 func _on_player_dead():
@@ -423,3 +424,7 @@ func set_difficulty(difficulty):
 			border_size = 45
 			survival_chance = 0.5
 			num_floors = 6
+
+
+func _on_ui_game_over():
+	$Player.die()

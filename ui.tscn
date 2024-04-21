@@ -28,7 +28,24 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6b8of")
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="PlayerHUD" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="HitRect" type="ColorRect" parent="PlayerHUD"]
+visible = false
+layout_mode = 0
+offset_right = 329.0
+offset_bottom = 54.0
+color = Color(1, 0.329412, 0, 0.384314)
+
+[node name="HealthBar" type="ProgressBar" parent="PlayerHUD"]
 z_index = 1
 layout_mode = 0
 offset_left = 12.0
@@ -40,7 +57,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_6otkd")
 value = 60.0
 show_percentage = false
 
-[node name="DamageBar" type="ProgressBar" parent="HealthBar"]
+[node name="DamageBar" type="ProgressBar" parent="PlayerHUD/HealthBar"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -53,11 +70,11 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_j30v2")
 value = 80.0
 show_percentage = false
 
-[node name="Timer" type="Timer" parent="HealthBar"]
+[node name="Timer" type="Timer" parent="PlayerHUD/HealthBar"]
 wait_time = 0.4
 one_shot = true
 
-[node name="Prompt" type="Label" parent="."]
+[node name="Prompt" type="Label" parent="PlayerHUD"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -65,16 +82,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -20.0
-offset_top = -11.5
+offset_top = -14.0
 offset_right = 20.0
-offset_bottom = 11.5
+offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 uppercase = true
 
-[node name="OrbCollectedLabel" type="Label" parent="."]
+[node name="OrbCollectedLabel" type="Label" parent="PlayerHUD"]
 layout_mode = 0
 offset_left = 13.0
 offset_top = 49.0
@@ -82,13 +99,29 @@ offset_right = 159.0
 offset_bottom = 72.0
 text = "Orbs Collected: 0/6"
 
-[node name="TerminalsRestoredLabel" type="Label" parent="."]
+[node name="TerminalsRestoredLabel" type="Label" parent="PlayerHUD"]
 layout_mode = 1
 offset_left = 12.0
 offset_top = 80.0
 offset_right = 171.0
 offset_bottom = 103.0
 text = "Terminals Restored: "
+
+[node name="TimerLabel" type="Label" parent="PlayerHUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.0
+offset_right = 65.0
+offset_bottom = 69.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "00:00"
+
+[node name="LevelTimer" type="Timer" parent="PlayerHUD"]
+wait_time = 120.0
+one_shot = true
 
 [node name="StartScreen" type="ColorRect" parent="."]
 process_mode = 2
@@ -98,7 +131,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.282353, 0.32549, 0.913725, 0.54902)
+color = Color(0.282353, 0.32549, 0.913725, 1)
 
 [node name="Title" type="Label" parent="StartScreen"]
 layout_mode = 1
@@ -285,14 +318,8 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
 text = "Orb Collected"
 
-[node name="HitRect" type="ColorRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 329.0
-offset_bottom = 54.0
-color = Color(1, 0.329412, 0, 0.384314)
-
-[connection signal="timeout" from="HealthBar/Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="PlayerHUD/HealthBar/Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="PlayerHUD/LevelTimer" to="." method="_on_level_timer_timeout"]
 [connection signal="pressed" from="StartScreen/Normal" to="." method="_on_normal_pressed"]
 [connection signal="pressed" from="StartScreen/Hard" to="." method="_on_hard_pressed"]
 [connection signal="pressed" from="StartScreen/Easy" to="." method="_on_easy_pressed"]
