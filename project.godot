@@ -88,3 +88,4 @@ Teleport={
 3d_physics/layer_3="world"
 3d_physics/layer_4="orb"
 3d_physics/layer_5="interactable"
+3d_physics/layer_6="orb_shard"

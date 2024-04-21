@@ -303,6 +303,7 @@ func make_room(rec:int, floor_index: int):
 		# Increase the chance of spawning a terminal next time
 		terminal_spawn_chances[floor_index] += 1.0/room_number
 	
+	#virus enemy spawn
 	if rng.randf() < 0.3:
 			var safe_positions = []
 			# Calculate safe positions within the room, avoiding walls
@@ -317,6 +318,24 @@ func make_room(rec:int, floor_index: int):
 				var enemy_instance = preload("res://virus_enemy.tscn").instantiate()
 				enemy_instance.initialize(Vector3(safe_positions[random_index]), $Player.position,"../Player")
 				add_child(enemy_instance)
+				enemy_instance.died.connect(shard_drop)
+	
+	#shard spawn
+	if rng.randf() < 0.6:
+			var safe_positions = []
+			# Calculate safe positions within the room, avoiding walls
+			for r in range(1, height - 1):
+				for c in range(1, width - 1):
+					safe_positions.append(start_pos + Vector3i(c, 0, r))
+			
+			safe_positions.erase(center_pos)
+			# Only proceed if there are safe positions available
+			if safe_positions.size() > 0:
+				var random_index = rng.randi() % safe_positions.size()
+				var shard_instance = preload("res://orb_shard.tscn").instantiate()
+				shard_instance.position = Vector3(safe_positions[random_index]) + Vector3(0,0.5,0)
+				add_child(shard_instance)
+				shard_instance.collected.connect(shard_collected)
 	
 func _ready():
 	#if not InputMap.has_action("Pause"):
@@ -342,13 +361,13 @@ func _on_dun_mesh_complete():
 func _orb_type_collected(orb_type: int):
 	match orb_type:
 		OrbType.SPEED:
-			$Player.increase_speed(5)
+			$Player.unlock_run()
 		OrbType.STRENGTH:
 			$Player.increase_strength(5)
 		OrbType.TELEPORT:
-			$Player._teleport(5)
+			$Player._teleport()
 		OrbType.JUMP:
-			$Player.increase_jump(5)
+			$Player.increase_jump(2)
 		OrbType.BLOCK:
 			$Player.spawn_blocks()
 		OrbType.BLOCK_SPAM:
@@ -371,6 +390,15 @@ func _on_player_hit(damage):
 
 func _on_orb_collected(orb_type):
 	ui._orb_collected(orb_type)
+
+func shard_collected():
+	ui._shard_collected()
+	
+func shard_drop(position):
+	var shard_instance = preload("res://orb_shard.tscn").instantiate()
+	shard_instance.position = position + Vector3(0,0.5,0)
+	add_child(shard_instance)
+	shard_instance.collected.connect(shard_collected)
 	
 func _on_terminal_restored():
 	ui._terminal_restored()
@@ -435,3 +463,19 @@ func _on_player_blocks_remaining(blocks):
 
 func _on_player_teleported():
 	ui.player_teleported()
+
+
+func _on_ui_upgrade(orb_type):
+	match orb_type:
+		OrbType.SPEED:
+			$Player.increase_speed(2)
+		OrbType.STRENGTH:
+			$Player.increase_strength(5)
+		OrbType.TELEPORT:
+			$Player.reduce_teleport_cooldown()
+		OrbType.JUMP:
+			$Player.increase_jump(3)
+		OrbType.BLOCK:
+			$Player.increase_blocks()
+		OrbType.BLOCK_SPAM:
+			$Player.increase_blocks()

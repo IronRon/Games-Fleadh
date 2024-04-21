@@ -24,6 +24,7 @@ var block_spam = false
 var blocks = 20
 
 var teleport = true
+var teleport_cooldown_time = 5
 
 var alive = true
 var mob = null
@@ -139,6 +140,15 @@ func _physics_process(delta):
 				var orb = collision.get_collider()
 				orb.pick_up()
 				break
+				
+			# If the collider is with an orb
+			if collision.get_collider().is_in_group("orb_shard"):
+				$AudioStreamPlayer3D.stream = orbsound
+				$AudioStreamPlayer3D.volume_db = -30
+				$AudioStreamPlayer3D.play()
+				var orb_shard = collision.get_collider()
+				orb_shard.pick_up()
+				break
 
 		move_and_slide()
 
@@ -152,19 +162,25 @@ func jumping():
 	return Input.is_action_pressed("ui_accept") and is_on_floor()
 	
 func increase_speed(amount: float):
+	fast += amount
+	
+func unlock_run():
 	run = true
 	
 func increase_strength(amount: float):
 	strength += amount
 	attack_up.emit(strength)
 	
-func _teleport(amount: float):
+func _teleport():
 	teleport = true
+	
+func reduce_teleport_cooldown():
+	teleport_cooldown_time = 3
 	
 func teleport_cooldown():
 	teleport = false
 	teleported.emit()
-	await get_tree().create_timer(5).timeout
+	await get_tree().create_timer(teleport_cooldown_time).timeout
 	teleport = true
 	
 func increase_jump(amount: float):
@@ -177,6 +193,10 @@ func spawn_blocks():
 func spawn_blocks_spam():
 	blocks_remaining.emit(blocks)
 	block_spam = true
+	
+func increase_blocks():
+	blocks += 10
+	blocks_remaining.emit(blocks)
 	
 func place_block():
 	var player_position = $"../GridMap".local_to_map($CollisionShape3D.global_transform.origin - Vector3(0,1,0))

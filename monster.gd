@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal died(position:Vector3)
+
 var player = null
 var player_position = Vector3.ZERO
 var state_machine
@@ -62,6 +64,7 @@ func _hit_finished():
 		player.damage_taken()
 
 func die():
+	died.emit(position)
 	anim_tree.set("parameters/conditions/hit", true)
 	await get_tree().create_timer(5).timeout
 	queue_free()

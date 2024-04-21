@@ -83,10 +83,10 @@ one_shot = true
 [node name="TeleportRecharge" type="ProgressBar" parent="PlayerHUD"]
 visible = false
 layout_mode = 1
-offset_left = 20.0
-offset_top = 175.0
-offset_right = 220.0
-offset_bottom = 195.0
+offset_left = 23.0
+offset_top = 208.0
+offset_right = 223.0
+offset_bottom = 228.0
 value = 60.0
 show_percentage = false
 
@@ -144,11 +144,18 @@ text = "Terminals Restored: "
 
 [node name="BlockCount" type="Label" parent="PlayerHUD"]
 visible = false
-offset_left = 16.0
-offset_top = 143.0
-offset_right = 162.0
-offset_bottom = 166.0
+offset_left = 18.0
+offset_top = 174.0
+offset_right = 164.0
+offset_bottom = 197.0
 text = "Blocks Left:"
+
+[node name="ShardCount" type="Label" parent="PlayerHUD"]
+offset_left = 16.0
+offset_top = 142.0
+offset_right = 162.0
+offset_bottom = 165.0
+text = "Shard Count: 0"
 
 [node name="TimerLabel" type="Label" parent="PlayerHUD"]
 layout_mode = 1
@@ -443,6 +450,22 @@ theme_override_font_sizes/font_size = 100
 text = "Hold right-click to place blocks 
 continuously"
 
+[node name="Block_SpamOrbUpgrade" type="Button" parent="Menu/Block_SpamOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1716.0
+offset_top = -72.0
+offset_right = 2342.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 150
+text = "Upgrade"
+
 [node name="BlockOrb" type="TextureRect" parent="Menu"]
 visible = false
 layout_mode = 0
@@ -485,6 +508,22 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 100
 text = "Press right-click to place a block"
 
+[node name="BlockOrbUpgrade" type="Button" parent="Menu/BlockOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1716.0
+offset_top = -72.0
+offset_right = 2342.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 150
+text = "Upgrade"
+
 [node name="SpeedOrb" type="TextureRect" parent="Menu"]
 visible = false
 layout_mode = 0
@@ -526,6 +565,22 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 100
 text = "Hold shift to run"
+
+[node name="SpeedOrbUpgrade" type="Button" parent="Menu/SpeedOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1716.0
+offset_top = -72.0
+offset_right = 2342.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 150
+text = "Upgrade"
 
 [node name="TeleportOrb" type="TextureRect" parent="Menu"]
 visible = false
@@ -570,6 +625,22 @@ theme_override_font_sizes/font_size = 100
 text = "Press Q and walk in a direction to 
 teleport in front of you"
 
+[node name="TeleportOrbUpgrade" type="Button" parent="Menu/TeleportOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1716.0
+offset_top = -72.0
+offset_right = 2342.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 150
+text = "Upgrade"
+
 [node name="JumpOrb" type="TextureRect" parent="Menu"]
 visible = false
 layout_mode = 0
@@ -611,6 +682,22 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 100
 text = "Jumps are now higher"
+
+[node name="JumpOrbUpgrade" type="Button" parent="Menu/JumpOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1716.0
+offset_top = -72.0
+offset_right = 2342.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 150
+text = "Upgrade"
 
 [node name="StrengthOrb" type="TextureRect" parent="Menu"]
 visible = false
@@ -654,6 +741,22 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 100
 text = "Attacks are now stronger"
 
+[node name="StrengthOrbUpgrade" type="Button" parent="Menu/StrengthOrb"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 1716.0
+offset_top = -72.0
+offset_right = 2342.0
+offset_bottom = 141.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 150
+text = "Upgrade"
+
 [node name="OrbPickUpRect" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
@@ -691,3 +794,9 @@ process_mode = 3
 [connection signal="pressed" from="Menu/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="Menu/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="Menu/QuitBuuton" to="." method="_on_quit_buuton_pressed"]
+[connection signal="pressed" from="Menu/Block_SpamOrb/Block_SpamOrbUpgrade" to="." method="_on_block_spam_upgrade_pressed"]
+[connection signal="pressed" from="Menu/BlockOrb/BlockOrbUpgrade" to="." method="_on_block_orb_upgrade_pressed"]
+[connection signal="pressed" from="Menu/SpeedOrb/SpeedOrbUpgrade" to="." method="_on_speed_orb_upgrade_pressed"]
+[connection signal="pressed" from="Menu/TeleportOrb/TeleportOrbUpgrade" to="." method="_on_teleport_orb_upgrade_pressed"]
+[connection signal="pressed" from="Menu/JumpOrb/JumpOrbUpgrade" to="." method="_on_jump_orb_upgrade_pressed"]
+[connection signal="pressed" from="Menu/StrengthOrb/StrengthOrbUpgrade" to="." method="_on_strength_orb_upgrade_pressed"]

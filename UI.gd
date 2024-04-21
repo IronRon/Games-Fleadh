@@ -6,6 +6,7 @@ signal quit
 signal retry
 signal start(difficulty)
 signal game_over
+signal upgrade(type:int)
 
 @onready var timer = $PlayerHUD/HealthBar/Timer
 @onready var damage_bar = $PlayerHUD/HealthBar/DamageBar
@@ -17,9 +18,12 @@ signal game_over
 
 @onready var win_sound = preload("res://music/win.wav")
 @onready var lose_sound = preload("res://music/you-lose.mp3")
+@onready var error_sound = preload("res://music/error.wav")
+@onready var upgrade_sound = preload("res://music/upgrade.wav")
 
 var level_time = 120
 var terminal_fix_time = 20
+var teleport_cooldown_time = 5
 
 var health = 0 : set = _set_health
 func _set_health(new_health):
@@ -35,6 +39,7 @@ func _set_health(new_health):
 	else:
 		damage_bar.value = health
 
+var shards = 0
 var blocks = 0
 var orb_collected = 0
 var terminals_restored = 0
@@ -62,7 +67,7 @@ func _process(delta):
 	timerlabel.text = "%02d:%02d" % time_left()
 	 # Update the progress bar as the timer counts down.
 	var time_passed = teleportTimer.time_left
-	var progress = (5 - time_passed) / 5 * 100  # Calculate progress percentage.
+	var progress = (teleport_cooldown_time - time_passed) / teleport_cooldown_time * 100  # Calculate progress percentage.
 	teleport_bar.value = progress
 	
 	if (terminals_restored == int(terminals)):
@@ -124,8 +129,15 @@ func text_update():
 	$PlayerHUD/OrbCollectedLabel.text = "Orbs Collected: %s/6" % orb_collected
 	$PlayerHUD/TerminalsRestoredLabel.text = "Terminals Restored: %s/%s" % [terminals_restored, terminals]
 	$PlayerHUD/BlockCount.text = "Blocks Left: %s" % blocks
+	$PlayerHUD/ShardCount.text = "Shard Count: %s" % shards
 	
 func died_rect():
+	$Menu/Block_SpamOrb.visible = false
+	$Menu/BlockOrb.visible = false
+	$Menu/SpeedOrb.visible = false
+	$Menu/TeleportOrb.visible = false
+	$Menu/JumpOrb.visible = false
+	$Menu/StrengthOrb.visible = false
 	$Menu.color = Color.hex(0xff161753)
 	$Menu/DeadText.visible = true
 	$AudioStreamPlayer.stream = lose_sound
@@ -160,6 +172,12 @@ func _show_menu():
 	$Menu.show()
 	
 func game_win():
+	$Menu/Block_SpamOrb.visible = false
+	$Menu/BlockOrb.visible = false
+	$Menu/SpeedOrb.visible = false
+	$Menu/TeleportOrb.visible = false
+	$Menu/JumpOrb.visible = false
+	$Menu/StrengthOrb.visible = false
 	$PlayerHUD/LevelTimer.set_paused(true)
 	$Menu/DeadText.text = "You Win!!!\n Time - %02d:%02d" % time_left()
 	$Menu/DeadText.visible = true
@@ -218,6 +236,88 @@ func _on_normal_pressed():
 func _on_level_timer_timeout():
 	game_over.emit()
 
-
 func _on_teleport_timer_timeout():
 	$PlayerHUD/TeleportRecharge.visible = false
+	
+func _shard_collected():
+	shards += 1
+	text_update()
+
+func _on_block_spam_upgrade_pressed():
+	if shards > 1:
+		shards -= 2
+		text_update()
+		upgrade.emit(OrbType.BLOCK_SPAM)
+		$Menu/Block_SpamOrb/Block_SpamOrbUpgrade.queue_free()
+		$AudioStreamPlayer.stream = upgrade_sound
+		$AudioStreamPlayer.play()
+	else:
+		$AudioStreamPlayer.stream = error_sound
+		$AudioStreamPlayer.play()
+
+
+func _on_block_orb_upgrade_pressed():
+	if shards > 1:
+		shards -= 2
+		text_update()
+		upgrade.emit(OrbType.BLOCK)
+		$Menu/BlockOrb/BlockOrbUpgrade.queue_free()
+		$AudioStreamPlayer.stream = upgrade_sound
+		$AudioStreamPlayer.play()
+	else:
+		$AudioStreamPlayer.stream = error_sound
+		$AudioStreamPlayer.play()
+
+
+func _on_speed_orb_upgrade_pressed():
+	if shards > 1:
+		shards -= 2
+		text_update()
+		upgrade.emit(OrbType.SPEED)
+		$Menu/SpeedOrb/SpeedOrbUpgrade.queue_free()
+		$AudioStreamPlayer.stream = upgrade_sound
+		$AudioStreamPlayer.play()
+	else:
+		$AudioStreamPlayer.stream = error_sound
+		$AudioStreamPlayer.play()
+
+
+func _on_teleport_orb_upgrade_pressed():
+	if shards > 1:
+		shards -= 2
+		text_update()
+		upgrade.emit(OrbType.TELEPORT)
+		teleport_cooldown_time = 3
+		$PlayerHUD/TeleportRecharge/TeleportTimer.wait_time = teleport_cooldown_time
+		$Menu/TeleportOrb/TeleportOrbUpgrade.queue_free()
+		$AudioStreamPlayer.stream = upgrade_sound
+		$AudioStreamPlayer.play()
+	else:
+		$AudioStreamPlayer.stream = error_sound
+		$AudioStreamPlayer.play()
+
+
+func _on_jump_orb_upgrade_pressed():
+	if shards > 1:
+		shards -= 2
+		text_update()
+		upgrade.emit(OrbType.JUMP)
+		$Menu/JumpOrb/JumpOrbUpgrade.queue_free()
+		$AudioStreamPlayer.stream = upgrade_sound
+		$AudioStreamPlayer.play()
+	else:
+		$AudioStreamPlayer.stream = error_sound
+		$AudioStreamPlayer.play()
+
+
+func _on_strength_orb_upgrade_pressed():
+	if shards > 1:
+		shards -= 2
+		text_update()
+		upgrade.emit(OrbType.STRENGTH)
+		$Menu/StrengthOrb/StrengthOrbUpgrade.queue_free()
+		$AudioStreamPlayer.stream = upgrade_sound
+		$AudioStreamPlayer.play()
+	else:
+		$AudioStreamPlayer.stream = error_sound
+		$AudioStreamPlayer.play()
