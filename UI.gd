@@ -1,7 +1,10 @@
 extends Control
 
+var difficulty = ""
+
 signal quit
 signal retry
+signal start(difficulty)
 
 @onready var timer = $HealthBar/Timer
 @onready var damage_bar = $HealthBar/DamageBar
@@ -126,8 +129,20 @@ func _on_close_pressed():
 func _on_start_pressed():
 	$StartScreen.hide()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	get_tree().paused = false
+	start.emit(difficulty)
+	
 
 func _on_timer_timeout():
 	damage_bar.value = health
-	
+
+func _on_hard_pressed():
+	difficulty = "hard"
+	_on_start_pressed()
+
+func _on_easy_pressed():
+	difficulty = "easy"
+	_on_start_pressed()
+
+func _on_normal_pressed():
+	difficulty = "normal"
+	_on_start_pressed()

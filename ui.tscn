@@ -143,7 +143,7 @@ Press Shift to place blocks
 with block orb
 Click to punch"
 
-[node name="Start" type="Button" parent="StartScreen"]
+[node name="Normal" type="Button" parent="StartScreen"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -157,7 +157,41 @@ offset_bottom = 16.856
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 41
-text = "Start
+text = "Normal
+"
+
+[node name="Hard" type="Button" parent="StartScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.653
+anchor_right = 0.5
+anchor_bottom = 0.653
+offset_left = 140.0
+offset_top = -31.144
+offset_right = 245.0
+offset_bottom = 33.856
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Hard
+"
+
+[node name="Easy" type="Button" parent="StartScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.653
+anchor_right = 0.5
+anchor_bottom = 0.653
+offset_left = -229.0
+offset_top = -30.144
+offset_right = -124.0
+offset_bottom = 34.856
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Easy
 "
 
 [node name="Menu" type="ColorRect" parent="."]
@@ -259,7 +293,9 @@ offset_bottom = 54.0
 color = Color(1, 0.329412, 0, 0.384314)
 
 [connection signal="timeout" from="HealthBar/Timer" to="." method="_on_timer_timeout"]
-[connection signal="pressed" from="StartScreen/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="StartScreen/Normal" to="." method="_on_normal_pressed"]
+[connection signal="pressed" from="StartScreen/Hard" to="." method="_on_hard_pressed"]
+[connection signal="pressed" from="StartScreen/Easy" to="." method="_on_easy_pressed"]
 [connection signal="pressed" from="Menu/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="Menu/RetryButton" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="Menu/QuitBuuton" to="." method="_on_quit_buuton_pressed"]

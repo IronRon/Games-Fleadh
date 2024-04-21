@@ -3,9 +3,6 @@ extends Node
 
 const dir = [Vector3.RIGHT, Vector3.LEFT, Vector3.FORWARD, Vector3.BACK]
 
-var grid_size = 250
-var grid_steps = 1000
-
 enum OrbType {
 	STRENGTH,
 	SPEED,
@@ -326,10 +323,6 @@ func _ready():
 	#else:
 		#print("Pause action exists.")
 	$CamRig/Camera3D.set_current(true)
-	$CamRig/AnimationPlayer.play("Start")
-	ui.set_number_of_terminals(str(num_floors))
-	ui.text_update()
-	set_start(true)
 
 	# Connect the collected signal from each orb to the _on_orb_collected function
 	for orb in orbs:
@@ -398,7 +391,35 @@ func _retry_game():
 func _on_camera_3d_animation_complete():
 	$CamRig/Camera3D.set_current(false)
 	$Player.camera_set()
-	ui.visible = true
+	get_tree().paused = false
+	#ui.visible = true
 
 func _on_player_dead():
 	ui.died_rect()
+
+func _on_ui_start(difficulty):
+	set_difficulty(difficulty)
+	$CamRig/AnimationPlayer.play("Start")
+	set_start(true)
+	ui.set_number_of_terminals(str(num_floors))
+	ui.text_update()
+	
+func set_difficulty(difficulty):
+	match difficulty:
+		"easy":
+			$CamRig/AnimationPlayer.speed_scale = 1.7
+			room_number = 4
+			border_size = 30
+			survival_chance = 1
+			num_floors = 4
+		"normal":
+			room_number = 5
+			border_size = 40
+			survival_chance = 0.6
+			num_floors = 5
+		"hard":
+			$CamRig/AnimationPlayer.speed_scale = 0.7
+			room_number = 6
+			border_size = 45
+			survival_chance = 0.5
+			num_floors = 6
