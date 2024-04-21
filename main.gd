@@ -7,7 +7,7 @@ enum OrbType {
 	STRENGTH,
 	SPEED,
 	JUMP,
-	DENSITY,
+	TELEPORT,
 	BLOCK,
 	BLOCK_SPAM
 }
@@ -52,10 +52,11 @@ func set_start(val:bool)->void:
 			floor_has_terminal[i] = false
 			teleporter_spawn_chances[i] = (1.0 / room_number) * 2  # Initial spawn chance
 			terminal_spawn_chances[i] = (1.0 / room_number) * 2
+			generate(i)
 			
 		#print("Floors = ", floors)
-		for floor in range(num_floors):
-			await generate(floor)
+		#for floor in range(num_floors):
+
 		dunmesh.set_start(true)
 		
 		
@@ -344,8 +345,8 @@ func _orb_type_collected(orb_type: int):
 			$Player.increase_speed(5)
 		OrbType.STRENGTH:
 			$Player.increase_strength(5)
-		OrbType.DENSITY:
-			$Player.increase_density(5)
+		OrbType.TELEPORT:
+			$Player._teleport(5)
 		OrbType.JUMP:
 			$Player.increase_jump(5)
 		OrbType.BLOCK:

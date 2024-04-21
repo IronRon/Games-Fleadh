@@ -4,7 +4,7 @@ enum OrbType {
 	STRENGTH,
 	SPEED,
 	JUMP,
-	DENSITY,
+	TELEPORT,
 	BLOCK,
 	BLOCK_SPAM
 }

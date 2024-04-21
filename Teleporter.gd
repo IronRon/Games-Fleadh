@@ -25,7 +25,7 @@ func _on_interactable_focused(interactor):
 	update_prompt.emit(prompt_text)
 	add_highlight()
 
-func _on_interactable_interacted(interactor):
+func _on_interactable_interacted(interactor, damage):
 	$AudioStreamPlayer3D.play()
 	teleport_player.emit(floor_index)
 

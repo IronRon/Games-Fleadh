@@ -40,7 +40,7 @@ enum OrbType {
 	STRENGTH,
 	SPEED,
 	JUMP,
-	DENSITY,
+	TELEPORT,
 	BLOCK,
 	BLOCK_SPAM
 }
@@ -76,8 +76,8 @@ func _orb_collected(orb_type):
 		OrbType.JUMP:
 			$OrbPickUpRect/PickUpText.text = "JUMP Orb Collected"
 			
-		OrbType.DENSITY:
-			$OrbPickUpRect/PickUpText.text = "DENSITY Orb Collected"
+		OrbType.TELEPORT:
+			$OrbPickUpRect/PickUpText.text = "TELEPORT Orb Collected"
 			
 		OrbType.BLOCK:
 			$OrbPickUpRect/PickUpText.text = "BLOCK Orb Collected"

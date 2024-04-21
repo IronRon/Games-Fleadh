@@ -76,8 +76,8 @@ func remove_highlight() -> void:
 func _on_interactable_focused(interactor):
 	add_highlight()
 
-func _on_interactable_interacted(interactor):
-	health -= 5
+func _on_interactable_interacted(interactor, damage):
+	health -= damage
 	healthbar.health = health
 	if (health <= 0):
 		interact.queue_free()

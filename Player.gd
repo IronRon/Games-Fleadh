@@ -3,17 +3,21 @@ extends CharacterBody3D
 # Emitted when the player was hit by a mob.
 signal hit(damage:int)
 signal dead
+signal attack_up(strength:int)
 
 const ATTACK_RANGE = 2.5
 const ROTATION_SPEED: float = 0.15
 
 var health = 100
+var run = false
 var speed = 5.0
+var fast = 6.0
 var jump = 5
 var strength = 5.0
 var density = 5.0
 var block = false
 var block_spam = false
+var teleport = true
 
 var alive = true
 var mob = null
@@ -49,18 +53,17 @@ func _physics_process(delta):
 		# Handle jump.
 		if jumping():
 			velocity.y = jump
+			
+		if (Input.is_action_pressed("Run")) and run:
+			speed = fast
+		else:
+			speed = 5.0
 		
 		if Input.is_action_just_pressed("Create") and block and !block_spam:
 			place_block()
 		
 		if (Input.is_action_pressed("Create")) and block_spam:
-			#print ("Create")
 			place_block()
-			
-		#if (Input.is_action_pressed("Punch")):
-		#	anim_tree.set("parameters/conditions/punch", true)
-		#else:
-		#	anim_tree.set("parameters/conditions/punch", false)
 			
 
 		# Get the input direction and handle the movement/deceleration.
@@ -86,6 +89,10 @@ func _physics_process(delta):
 
 		
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		
+		if (Input.is_action_pressed("Teleport")) and teleport:
+			position += Vector3(direction.x * 0.5, 0, direction.z * 0.5)
+			
 		if direction:
 			#armature.look_at(position + direction)
 			velocity.x = direction.x * speed
@@ -131,13 +138,14 @@ func jumping():
 	return Input.is_action_pressed("ui_accept") and is_on_floor()
 	
 func increase_speed(amount: float):
-	speed += amount
+	run = true
 	
 func increase_strength(amount: float):
 	strength += amount
+	attack_up.emit(strength)
 	
-func increase_density(amount: float):
-	density += amount
+func _teleport(amount: float):
+	teleport = true
 	
 func increase_jump(amount: float):
 	jump += amount

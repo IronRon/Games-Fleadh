@@ -9,7 +9,7 @@ signal focused(interactor: Interactor)
 # Emitted when an Interactor stops looking at me.
 signal unfocused(interactor: Interactor)
 # Emitted when an Interactor interacts with me.
-signal interacted(interactor: Interactor)
+signal interacted(interactor: Interactor, damage: int)
 
 func is_enemy() -> bool:
 	return enemy  # Default implementation for non-enemies

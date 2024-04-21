@@ -4,9 +4,10 @@ class_name Interactor
 
 var controller: Node3D
 
-func interact(interactable: Interactable) -> void:
+
+func interact(interactable: Interactable, damage: int = 5) -> void:
 	if is_instance_valid(interactable):
-		interactable.interacted.emit(self)
+		interactable.interacted.emit(self, damage)
 
 func focus(interactable: Interactable) -> void:
 	interactable.focused.emit(self)
