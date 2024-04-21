@@ -364,6 +364,7 @@ text = "YOU DIED"
 
 [node name="Block_SpamOrb" type="TextureRect" parent="Menu"]
 visible = false
+layout_mode = 0
 offset_left = 10.0
 offset_top = 37.0
 offset_right = 1034.0
@@ -406,6 +407,7 @@ continuously"
 
 [node name="BlockOrb" type="TextureRect" parent="Menu"]
 visible = false
+layout_mode = 0
 offset_left = 10.0
 offset_top = 414.0
 offset_right = 1034.0
@@ -447,6 +449,7 @@ text = "Press right-click to place a block"
 
 [node name="SpeedOrb" type="TextureRect" parent="Menu"]
 visible = false
+layout_mode = 0
 offset_left = 10.0
 offset_top = 341.0
 offset_right = 1034.0
@@ -488,6 +491,7 @@ text = "Hold shift to run"
 
 [node name="TeleportOrb" type="TextureRect" parent="Menu"]
 visible = false
+layout_mode = 0
 offset_left = 10.0
 offset_top = 267.0
 offset_right = 1034.0
@@ -530,6 +534,7 @@ teleport in front of you"
 
 [node name="JumpOrb" type="TextureRect" parent="Menu"]
 visible = false
+layout_mode = 0
 offset_left = 9.0
 offset_top = 189.0
 offset_right = 1033.0
@@ -571,6 +576,7 @@ text = "Jumps are now higher"
 
 [node name="StrengthOrb" type="TextureRect" parent="Menu"]
 visible = false
+layout_mode = 0
 offset_left = 10.0
 offset_top = 111.0
 offset_right = 1034.0

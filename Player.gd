@@ -9,14 +9,18 @@ const ATTACK_RANGE = 2.5
 const ROTATION_SPEED: float = 0.15
 
 var health = 100
+
 var run = false
 var speed = 5.0
 var fast = 6.0
+
 var jump = 5
 var strength = 5.0
-var density = 5.0
+
 var block = false
 var block_spam = false
+var blocks = 20
+
 var teleport = true
 
 var alive = true
@@ -59,10 +63,10 @@ func _physics_process(delta):
 		else:
 			speed = 5.0
 		
-		if Input.is_action_just_pressed("Create") and block and !block_spam:
+		if Input.is_action_just_pressed("Create") and block and !block_spam and blocks > 0:
 			place_block()
 		
-		if (Input.is_action_pressed("Create")) and block_spam:
+		if (Input.is_action_pressed("Create")) and block_spam and blocks > 0:
 			place_block()
 			
 
@@ -163,6 +167,10 @@ func place_block():
 		#print($"../GridMap".local_to_map($PlayerMesh.global_transform.origin - Vector3(0,2,0)))
 		#print($PlayerMesh.global_transform.origin - Vector3(0, 2, 0))
 		$"../GridMap".set_cell_item(player_position_int, 4)
+		blocks -= 1
+		await get_tree().create_timer(5).timeout
+		$"../GridMap".set_cell_item(player_position_int, -1)
+		
 	
 # And this function at the bottom.
 func die():
