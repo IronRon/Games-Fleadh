@@ -678,6 +678,9 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 50
 text = "Orb Collected"
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+
 [connection signal="timeout" from="PlayerHUD/HealthBar/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="PlayerHUD/TeleportRecharge/TeleportTimer" to="." method="_on_teleport_timer_timeout"]
 [connection signal="timeout" from="PlayerHUD/LevelTimer" to="." method="_on_level_timer_timeout"]

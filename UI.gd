@@ -15,6 +15,9 @@ signal game_over
 @onready var teleportTimer = $PlayerHUD/TeleportRecharge/TeleportTimer
 @onready var teleport_bar = $PlayerHUD/TeleportRecharge
 
+@onready var win_sound = preload("res://music/win.wav")
+@onready var lose_sound = preload("res://music/you-lose.mp3")
+
 var level_time = 120
 var terminal_fix_time = 20
 
@@ -61,6 +64,9 @@ func _process(delta):
 	var time_passed = teleportTimer.time_left
 	var progress = (5 - time_passed) / 5 * 100  # Calculate progress percentage.
 	teleport_bar.value = progress
+	
+	if (terminals_restored == int(terminals)):
+		game_win()
 
 func init_health(_health):
 	health = _health
@@ -122,6 +128,8 @@ func text_update():
 func died_rect():
 	$Menu.color = Color.hex(0xff161753)
 	$Menu/DeadText.visible = true
+	$AudioStreamPlayer.stream = lose_sound
+	$AudioStreamPlayer.play()
 	_show_menu()
 	
 func player_hit(damage):
@@ -150,6 +158,15 @@ func _show_menu():
 	get_tree().paused = true
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$Menu.show()
+	
+func game_win():
+	$PlayerHUD/LevelTimer.set_paused(true)
+	$Menu/DeadText.text = "You Win!!!\n Time - %02d:%02d" % time_left()
+	$Menu/DeadText.visible = true
+	$Menu.color = Color(0.2, 1, 0.2, 1)
+	$AudioStreamPlayer.stream = win_sound
+	$AudioStreamPlayer.play()
+	_show_menu()
 	
 func show_HUD():
 	$PlayerHUD.visible = true
