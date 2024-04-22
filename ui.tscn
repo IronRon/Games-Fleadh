@@ -145,6 +145,7 @@ text = "Terminals Restored: "
 
 [node name="BlockCount" type="Label" parent="PlayerHUD"]
 visible = false
+layout_mode = 0
 offset_left = 18.0
 offset_top = 174.0
 offset_right = 164.0
@@ -152,6 +153,7 @@ offset_bottom = 197.0
 text = "Blocks Left:"
 
 [node name="ShardCount" type="Label" parent="PlayerHUD"]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 142.0
 offset_right = 162.0
@@ -278,8 +280,8 @@ grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 26
-text = "A Virus has Hackedyour Computer.
-Restore the terminals to svae the day."
+text = "A Virus has Hacked your Computer.
+Restore the terminals to save the day."
 horizontal_alignment = 1
 
 [node name="Controls" type="Label" parent="StartScreen"]
@@ -368,6 +370,7 @@ offset_top = 18.0
 offset_right = -25.0
 offset_bottom = 49.0
 grow_horizontal = 0
+theme_override_font_sizes/font_size = 28
 text = "Close
 "
 
@@ -467,14 +470,15 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 1716.0
-offset_top = -72.0
-offset_right = 2342.0
-offset_bottom = 141.0
+offset_left = 1796.0
+offset_top = -172.0
+offset_right = 2823.0
+offset_bottom = 246.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 150
-text = "Upgrade"
+text = "Upgrade
+Cost: 2 Shards"
 
 [node name="BlockOrb" type="TextureRect" parent="Menu"]
 visible = false
@@ -525,14 +529,15 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 1716.0
-offset_top = -72.0
-offset_right = 2342.0
-offset_bottom = 141.0
+offset_left = 1796.0
+offset_top = -172.0
+offset_right = 2823.0
+offset_bottom = 246.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 150
-text = "Upgrade"
+text = "Upgrade
+Cost: 2 Shards"
 
 [node name="SpeedOrb" type="TextureRect" parent="Menu"]
 visible = false
@@ -583,14 +588,15 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 1716.0
-offset_top = -72.0
-offset_right = 2342.0
-offset_bottom = 141.0
+offset_left = 1796.0
+offset_top = -172.0
+offset_right = 2823.0
+offset_bottom = 246.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 150
-text = "Upgrade"
+text = "Upgrade
+Cost: 2 Shards"
 
 [node name="TeleportOrb" type="TextureRect" parent="Menu"]
 visible = false
@@ -642,14 +648,15 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 1716.0
-offset_top = -72.0
-offset_right = 2342.0
-offset_bottom = 141.0
+offset_left = 1796.0
+offset_top = -172.0
+offset_right = 2823.0
+offset_bottom = 246.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 150
-text = "Upgrade"
+text = "Upgrade
+Cost: 2 Shards"
 
 [node name="JumpOrb" type="TextureRect" parent="Menu"]
 visible = false
@@ -700,14 +707,15 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 1716.0
-offset_top = -72.0
-offset_right = 2342.0
-offset_bottom = 141.0
+offset_left = 1796.0
+offset_top = -162.0
+offset_right = 2823.0
+offset_bottom = 256.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 150
-text = "Upgrade"
+text = "Upgrade
+Cost: 2 Shards"
 
 [node name="StrengthOrb" type="TextureRect" parent="Menu"]
 visible = false
@@ -758,14 +766,15 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 1716.0
-offset_top = -72.0
-offset_right = 2342.0
-offset_bottom = 141.0
+offset_left = 1796.0
+offset_top = -152.0
+offset_right = 2823.0
+offset_bottom = 266.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_font_sizes/font_size = 150
-text = "Upgrade"
+text = "Upgrade
+Cost: 2 Shards"
 
 [node name="OrbPickUpRect" type="ColorRect" parent="."]
 visible = false
