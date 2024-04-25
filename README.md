@@ -1,5 +1,3 @@
-![image](https://github.com/IronRon/Games-Fleadh/assets/109098945/806841b9-b22b-44d8-9516-7e49fe1c2ce8)
-
 # Random Access Runner
 
 Include for each contributer:
@@ -83,11 +81,17 @@ Secondary objectives include collecting orbs for upgrades, enhancing the player'
 # What I am most proud of in the assignment
 
 Ronak - 
-Ali - I am proud of the way it all came together.
+I am  pround of how the game was able to deliver a fun and good time to my friends. I also feel proud to have finished a fully playable game after starting from knowing abosolutely nothing about the Godot Game Engine.
+Ali -
+I am proud of the way it all came together.
 
 # What I learned
 
 Ronak - 
+I learned how to use Object-Oriented Programming concepts like classes, objects, inheritance, abstraction and encapsulation.
+I gained experience with the Godot Engine, learning how Godot’s scene and node system works, gained proficiency in GDScript, Godot’s scripting language.
+I also gained a bit of insight into how to use blender to create 3d models and animations.
+I learned how to resolve some git commit problems that came up in the project.
 Ali -
 I learned how to create 3d models and game physics.
 I learned how to use the Godot Game Engine.
