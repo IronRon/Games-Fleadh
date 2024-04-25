@@ -18,13 +18,21 @@ Student Number: C22366766
 
 Class Group:
 
-Github:
+Github: https://github.com/C22366766
 
 # Video
 
 [![YouTube](https://i.ytimg.com/an_webp/yjR0-Los8_E/mqdefault_6s.webp?du=3000&sqp=CI7bqrEG&rs=AOn4CLAXEO1RfeUtmztPKg7GmZIv_ZzxjA)](https://www.youtube.com/watch?v=yjR0-Los8_E)
 
 # Screenshots
+![image](https://github.com/IronRon/Random-Access-Runner/assets/109098945/e3173fb7-51fc-4d8d-b437-c1741a9e08cd)
+
+![image](https://github.com/IronRon/Random-Access-Runner/assets/109098945/cc518aeb-3206-4607-9d6d-399db03539fc)
+
+![image](https://github.com/IronRon/Random-Access-Runner/assets/109098945/55c755db-f82d-408f-8e00-8f5ad244ff0f)
+
+![image](https://github.com/IronRon/Random-Access-Runner/assets/109098945/200441d9-2d7c-4e0e-b290-1cb29b01037d)
+
 
 # Description of the project
 In Random Access Runner, you are thrust into the digital labyrinth of your own computer after a malicious virus launches a sophisticated attack. As the system's last hope, you must navigate through intricately procedurally generated maps that represent the inner workings of your computer. Each level is a complex terminal that holds part of the solution to eradicate the virus and restore system integrity.
